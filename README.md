@@ -12,7 +12,7 @@ get them there fastest.
 
 All players will spawn with 1 ender pearl at the start, and along the way the will be able to pick up other items to help them, such as more ender pearls, speed potions, jump potions etc. 
 
-The winner is the first player to get to the beach and jump into the light! 
+The winner is the first player to get to the beacon and jump into the light! 
 
 Then you can race again with completely new start and finishing locations. 
 
