@@ -8,7 +8,7 @@
 
 # FINISH
 # Create ArmorStands to mark the location of all potential finish points.
-# Stand on top of the beacon so that a block and be set/removed to turn the beacon off and on.
+# Place where the beacon should go. Beacon will be removed and placed to turn on and off.
 /summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:"cr_finish_point"}
 
 # SHOW START POINTS
@@ -37,9 +37,9 @@
 /scoreboard objectives add finish_points dummy FINISH POINTS
  
 # Put all marker stands on the scoreboard, and set to 0
-/scoreboard players set @a[type=ArmorStand,name=cr_start_point] start_points 0
-/scoreboard players set @a[type=ArmorStand,name=cr_start_spawn] start_points 0
-/scoreboard players set @a[type=ArmorStand,name=cr_finish_point] finish_points 0
+/scoreboard players set @e[type=ArmorStand,name=cr_start_point] start_points 0
+/scoreboard players set @e[type=ArmorStand,name=cr_start_spawn] start_points 0
+/scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
 
 
 
