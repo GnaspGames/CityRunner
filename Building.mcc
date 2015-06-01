@@ -1,0 +1,51 @@
+<# MARKER STANDS
+
+# START POINTS
+# Create ArmorStands to mark the location of all potential start points.
+/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:"cr_start_point"}
+# Create ArmorStands to mark all the potential spawn locations near start point (there can be as many or as few as you want).
+/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:"cr_start_spawn"}
+
+# FINISH
+# Create ArmorStands to mark the location of all potential finish points.
+# Stand on top of the beacon so that a block and be set/removed to turn the beacon off and on.
+/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:"cr_finish_point"}
+
+# SHOW START POINTS
+/entitydata @e[name=cr_start_point] {Invisible:false}
+# HIDE START POINTS
+/entitydata @e[name=cr_start_point] {Invisible:true}
+
+# SHOW SPAWN POINTS
+/entitydata @e[name=cr_start_spawn] {Invisible:false}
+# HIDE SPAWN POINTS
+/entitydata @e[name=cr_start_spawn] {Invisible:true}
+
+# SHOW FINISH POINTS
+/entitydata @e[name=cr_finish_point] {Invisible:false}
+# HIDE FINISH POINTS
+/entitydata @e[name=cr_finish_point] {Invisible:true}
+>
+
+<# SCOREBOARDS
+
+# START & FINISH POINTS
+# Use these scoreboards to keep track of which stands are the current starting and finishing point. 
+ 
+# Create the scoreboards
+/scoreboard objectives add start_points dummy START POINTS
+/scoreboard objectives add finish_points dummy FINISH POINTS
+ 
+# Put all marker stands on the scoreboard, and set to 0
+/scoreboard players set @a[type=ArmorStand,name=cr_start_point] start_points 0
+/scoreboard players set @a[type=ArmorStand,name=cr_start_spawn] start_points 0
+/scoreboard players set @a[type=ArmorStand,name=cr_finish_point] finish_points 0
+
+
+
+
+
+
+
+
+
