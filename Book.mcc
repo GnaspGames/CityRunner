@@ -1,0 +1,45 @@
+/give @p written_book 1 0 
+{
+	pages:
+	[
+		"[\"\",
+		{
+			\"text\":\"MARKER STANDS\n\",
+			\"bold\":\"false\"
+		},
+		{
+			\"text\":\" * [Summon Start Point]\n\",
+			\"bold\":\"true\",
+			\"clickEvent\":
+			{
+				\"action\":\"run_command\",
+				\"value\":\"/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:\\\"cr_start_point\\\"}\"
+			}
+		},
+		{
+			\"text\":\" * [Summon Spawn Point]\n\",
+			\"bold\":\"true\",
+			\"clickEvent\":
+			{
+				\"action\":\"run_command\",
+				\"value\":\"/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:\\\"cr_start_spawn\\\"}\"
+			}
+		},
+		{
+			\"text\":\"   (around start points)\n\",
+			\"bold\":\"false\"
+		},
+		{
+			\"text\":\" * [Summon Finish Point]\n\",
+			\"bold\":\"true\",
+			\"clickEvent\":
+			{
+				\"action\":\"run_command\",
+				\"value\":\"/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:\\\"cr_finish_point\\\"}\"
+			}
+		}
+		]"
+	],
+	title:Book,
+	author:TellrawGenerator
+}
