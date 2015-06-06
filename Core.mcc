@@ -1,0 +1,43 @@
+#--- CORE MECHANICS ---#
+# Core command block code used for handling fill clocks, fill strips etc
+
+<# SCOREBOARDS
+
+# CLOCKS
+# Use this scoreboard to control fill clocks. ArmorStands with a score of 1 will act as fill clocks
+/scoreboard objectives add clocks dummy CLOCKS
+
+# STRIPS
+# Use this scoreboard to execute fill strips, just once.
+/scoreboard objectives add strips dummy STRIPS
+>
+
+<# FILL CLOCKS
+# Running on a standard fill clock, to switch other ArmorStand fill clocks on or off.
+
+# Execute on "active" clocks
+/execute @e[score_clocks_min=1] ~ ~ ~ 
+	fill ~ ~ ~1 ~ ~ ~14 wool 15 replace redstone_block 0
+/execute @e[score_clocks_min=1] ~ ~ ~ 
+	fill ~ ~ ~1 ~ ~ ~14 redstone_block 0 replace wool 15
+	
+# Execute on "inactive" clocks to show they are turned off
+/execute @e[score_clocks_min=0,score_clocks=0] ~ ~ ~ 
+	fill ~ ~ ~1 ~ ~ ~14 wool 15 replace redstone_block 0
+>
+
+# FILL STRIPS
+# Running on the "core" fill clock, to turn other ArmorStand fill switches on and off again.
+
+# Execute on a "queued" strip (has a score of 1), immediately turn off again.
+/execute @e[score_strips_min=1] ~ ~ ~ 
+	fill ~ ~ ~1 ~ ~ ~14 redstone_block 0 replace wool 15
+/execute @e[score_strips_min=1] ~ ~ ~ 
+	fill ~ ~ ~1 ~ ~ ~14 wool 15 replace redstone_block 0
+/execute @e[score_strips_min=1] ~ ~ ~ 
+	scoreboard players set @e[score_strips_min=1] strips 0
+
+
+
+	
+	
