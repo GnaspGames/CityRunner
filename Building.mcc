@@ -35,7 +35,7 @@
 
 # COUNTDOWNS
 # Use this scoreboard on the main "CityRunner" ArmorStand to manage countdown events
-/scoreboard objectives add countdown dummy Countdown
+/scoreboard objectives add countdown dummy COUNTDOWN
 
 # START & FINISH POINTS
 # Use these scoreboards to keep track of which stands are the current starting and finishing point. 
@@ -47,9 +47,6 @@
  # WINS & PROGRESS
  # Use this scoreboard to track how many times players have won (since last reset).
 /scoreboard objectives add total_wins dummy Total Wins
-
-
-
 >
 
 

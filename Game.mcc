@@ -1,4 +1,52 @@
+<# START COUNTDOWN
+# Start a countdown that leads to the game start
 
+# To start, use: 
+/scoreboard players set @e[name=strip_start_countdown] strips 1
+
+strip_start_countdown:
+	/title @a times 0 40 20 
+	/scoreboard players set @e[type=ArmorStand,name=CityRunner] countdown 100
+	/scoreboard players set @e[name=clock_countdown] clocks 1
+
+clock_countdown:	
+
+	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=100,score_countdown_min=100] ~ ~ ~ 
+		execute @a ~ ~ ~ 
+			title @p title {text:"5",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
+			
+	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=80,score_countdown_min=80] ~ ~ ~ 
+		execute @a ~ ~ ~ 
+			title @p title {text:"4",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
+			
+	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=60,score_countdown_min=60] ~ ~ ~ 
+		execute @a ~ ~ ~ 
+			title @p title {text:"3",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
+			
+	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=40,score_countdown_min=40] ~ ~ ~ 
+		execute @a ~ ~ ~ 
+			title @p title {text:"2",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
+			
+	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=20,score_countdown_min=20] ~ ~ ~ 
+		execute @a ~ ~ ~ 
+			title @p title {text:"1",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
+			
+	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=0,score_countdown_min=0] ~ ~ ~ 
+		execute @a ~ ~ ~ 
+			title @p title {text:"Go!",color:green,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
+		
+	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=0,score_countdown_min=0] ~ ~ ~ 
+		scoreboard players set @e[name=clock_countdown] clocks 0
+		
+	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=0,score_countdown_min=0] ~ ~ ~ 
+		scoreboard players set @e[name=strip_start] strips 1
+			
+	/scoreboard players remove @e[type=ArmorStand,name=CityRunner] countdown 1
+
+>
+
+
+# START GAME
 <# START GAME 
 
 # To start a new game:
@@ -12,14 +60,6 @@ strip_start:
 	# Send players to a random spawn point.
 	/execute @a ~ ~ ~ tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
 	/execute @a ~ ~ ~ spawnpoint
-
-	/title @a times 0 40 20 
-
-	# Show the "Go" title
-	/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ 
-		execute @a[r=10] ~ ~ ~ 
-			title @p title {text:"Go!",color:green,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
-
 			
 	# Reset start point scores
 	/scoreboard players set @e[type=ArmorStand,name=cr_start_point] start_points 0
@@ -57,7 +97,7 @@ clock_winner:
 		
 	# Show "Play Again" option	
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-		tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"green","underlined":"true","clickEvent":{"action":"run_command","value":"/scoreboard players set @e[name=strip_start] strips 1"}}]
+		tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"green","underlined":"true","clickEvent":{"action":"run_command","value":"/scoreboard players set @e[name=strip_start_countdown] strips 1"}}]
 		
 	# Clear all inventories and effects
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
