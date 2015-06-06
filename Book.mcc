@@ -44,7 +44,7 @@
 			}
 		},
 		{
-			\"text\":\"[Show]\n\",
+			\"text\":\"[Show]\n\n\",
 			\"bold\":\"true\",
 			\"clickEvent\":
 			{
@@ -53,7 +53,7 @@
 			}
 		},
 		{
-			\"text\":\"TELEPORT\n\",
+			\"text\":\"TELEPORTS\n\",
 			\"bold\":\"false\"
 		},
 		{
@@ -89,6 +89,6 @@
 		}
 		]"
 	],
-	title:Book,
-	author:TellrawGenerator
+	title:"City Runner Book",
+	author:Gnasp
 }
