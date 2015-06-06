@@ -84,7 +84,7 @@
 			\"clickEvent\":
 			{
 				\"action\":\"run_command\",
-				\"value\":\"/setblock -63 3 -96 minecraft:redstone_block\"
+				\"value\":\"/scoreboard players set @e[name=strip_start] strips 1\"
 			}
 		}
 		]"

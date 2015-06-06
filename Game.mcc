@@ -1,68 +1,78 @@
 
-<# NEW START POINT 
+<# START GAME 
 
-# Choose a new Start Point
-/scoreboard players set @r[type=ArmorStand,name=cr_start_point] start_points 1
-# Set up all viable spawn points around start point
-/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ scoreboard players set @e[name=cr_start_spawn,r=10] start_points 1
-# Send players to a random spawn point.
-/execute @a ~ ~ ~ tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
-/execute @a ~ ~ ~ spawnpoint
+# To start a new game:
+/scoreboard players set @e[name=strip_start] strips 1
 
-/title @a times 0 40 20 
+strip_start:
+	# Choose a new Start Point
+	/scoreboard players set @r[type=ArmorStand,name=cr_start_point] start_points 1
+	# Set up all viable spawn points around start point
+	/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ scoreboard players set @e[name=cr_start_spawn,r=10] start_points 1
+	# Send players to a random spawn point.
+	/execute @a ~ ~ ~ tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
+	/execute @a ~ ~ ~ spawnpoint
 
-# Show the "Go" title
-/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ 
-	execute @a[r=10] ~ ~ ~ 
-		title @p title {text:"Go!",color:green,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
+	/title @a times 0 40 20 
 
-		
-# Reset start point scores
-/scoreboard players set @e[type=ArmorStand,name=cr_start_point] start_points 0
-/scoreboard players set @e[type=ArmorStand,name=cr_start_spawn] start_points 0
+	# Show the "Go" title
+	/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ 
+		execute @a[r=10] ~ ~ ~ 
+			title @p title {text:"Go!",color:green,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
 
-/effect @a minecraft:speed 1000 10
-/give @a minecraft:ender_pearl 10
->
+			
+	# Reset start point scores
+	/scoreboard players set @e[type=ArmorStand,name=cr_start_point] start_points 0
+	/scoreboard players set @e[type=ArmorStand,name=cr_start_spawn] start_points 0
 
-<# NEW FINISH POINT
+	# Give players starting effects
+	/effect @a minecraft:speed 1000 3
+	/give @a minecraft:ender_pearl 5
+	
+	# Choose a new Finish Point
+	/scoreboard players set @r[type=ArmorStand,name=cr_finish_point] finish_points 1
 
-# Choose a new Finish Point
-/scoreboard players set @r[type=ArmorStand,name=cr_finish_point] finish_points 1
-
-# Set the beacon block to turn it on
-/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ setblock ~ ~ ~ minecraft:beacon
-
+	# Set the beacon block to turn it on
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ setblock ~ ~ ~ minecraft:beacon
+	
+	# Turn on fill clock for win conditions
+	/scoreboard players set @e[name=clock_winner] clocks 1
 >
 
 <# CHECK FOR WINNER
 
-# Execute on anyone who gets to be directly above the finish point.
+clock_winner:
+	# Execute on anyone who gets to be directly above the finish point.
 
-# Announce winner
-/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-	say "I'm the winner!"
-	
-/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-	scoreboard players set @p total_wins 1
-	
-# Turn off the beacon
-/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-	execute @e[name=cr_finish_point] ~ ~ ~ setblock ~ ~ ~ minecraft:air
-	
-# Show "Play Again" option	
-/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-	tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"green","underlined":"true","clickEvent":{"action":"run_command","value":"/setblock -63 3 -96 minecraft:redstone_block"}}]
-	
-# Clear all inventories and effects
-/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-	/effect @a clear
-	
-/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-	/clear @a
-	
-# Remove finish point.	
-/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-	scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
+	# Announce winner
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		say "I'm the winner!"
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		scoreboard players set @p total_wins 1
+		
+	# Turn off the beacon
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		execute @e[name=cr_finish_point] ~ ~ ~ setblock ~ ~ ~ minecraft:air
+		
+	# Show "Play Again" option	
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"green","underlined":"true","clickEvent":{"action":"run_command","value":"/scoreboard players set @e[name=strip_start] strips 1"}}]
+		
+	# Clear all inventories and effects
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		/effect @a clear
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		/clear @a
+		
+	# Turn off fill clock for win conditions
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		scoreboard players set @e[name=clock_winner] clocks 0
+		
+	# Remove finish point.	
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
+		
 
 >
