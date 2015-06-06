@@ -2,14 +2,14 @@
 
 # START POINTS
 # Create ArmorStands to mark the location of all potential start points.
-/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:"cr_start_point"}
+/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_start_point"}
 # Create ArmorStands to mark all the potential spawn locations near start point (there can be as many or as few as you want).
-/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:"cr_start_spawn"}
+/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_start_spawn"}
 
 # FINISH
 # Create ArmorStands to mark the location of all potential finish points.
 # Place where the beacon should go. Beacon will be removed and placed to turn on and off.
-/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:"cr_finish_point"}
+/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_finish_point"}
 
 # SHOW START POINTS
 /entitydata @e[name=cr_start_point] {Invisible:false}
@@ -25,9 +25,17 @@
 /entitydata @e[name=cr_finish_point] {Invisible:false}
 # HIDE FINISH POINTS
 /entitydata @e[name=cr_finish_point] {Invisible:true}
+
+# CITY RUNNER STAND
+# This game uses a main ArmorStand to execute certain processes off.
+/summon ArmorStand ~ ~ ~ {CustomName:"CityRunner",NoGravity:true,Marker:true,Invisible:true}
 >
 
 <# SCOREBOARDS
+
+# COUNTDOWNS
+# Use this scoreboard on the main "CityRunner" ArmorStand to manage countdown events
+/scoreboard objectives add countdown dummy Countdown
 
 # START & FINISH POINTS
 # Use these scoreboards to keep track of which stands are the current starting and finishing point. 
@@ -36,11 +44,13 @@
 /scoreboard objectives add start_points dummy START POINTS
 /scoreboard objectives add finish_points dummy FINISH POINTS
  
-# Put all marker stands on the scoreboard, and set to 0
-/scoreboard players set @e[type=ArmorStand,name=cr_start_point] start_points 0
-/scoreboard players set @e[type=ArmorStand,name=cr_start_spawn] start_points 0
-/scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
+ # WINS & PROGRESS
+ # Use this scoreboard to track how many times players have won (since last reset).
+/scoreboard objectives add total_wins dummy Total Wins
 
+
+
+>
 
 
 
