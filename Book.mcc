@@ -8,7 +8,7 @@
 			\"bold\":\"false\"
 		},
 		{
-			\"text\":\" * [Summon Start Point]\n\",
+			\"text\":\"[Summon Start]\n\",
 			\"bold\":\"true\",
 			\"clickEvent\":
 			{
@@ -17,7 +17,7 @@
 			}
 		},
 		{
-			\"text\":\" * [Summon Spawn Point]\n\",
+			\"text\":\"[Summon Spawn]\n\",
 			\"bold\":\"true\",
 			\"clickEvent\":
 			{
@@ -26,16 +26,65 @@
 			}
 		},
 		{
-			\"text\":\"   (around start points)\n\",
-			\"bold\":\"false\"
-		},
-		{
-			\"text\":\" * [Summon Finish Point]\n\",
+			\"text\":\"[Summon Finish]\n\",
 			\"bold\":\"true\",
 			\"clickEvent\":
 			{
 				\"action\":\"run_command\",
 				\"value\":\"/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,CustomName:\\\"cr_finish_point\\\"}\"
+			}
+		},
+		{
+			\"text\":\"[Hide] \",
+			\"bold\":\"true\",
+			\"clickEvent\":
+			{
+				\"action\":\"run_command\",
+				\"value\":\"/entitydata @e[type=ArmorStand] {Invisible:true}\"
+			}
+		},
+		{
+			\"text\":\"[Show]\n\",
+			\"bold\":\"true\",
+			\"clickEvent\":
+			{
+				\"action\":\"run_command\",
+				\"value\":\"/entitydata @e[type=ArmorStand] {Invisible:false}\"
+			}
+		},
+		{
+			\"text\":\"TELEPORT\n\",
+			\"bold\":\"false\"
+		},
+		{
+			\"text\":\"\n\n[Spawnchunks] \n\",
+			\"bold\":\"true\",
+			\"clickEvent\":
+			{
+				\"action\":\"run_command\",
+				\"value\":\"/tp -73 2 -89\"
+			}
+		},
+		{
+			\"text\":\"[City]\n\",
+			\"bold\":\"true\",
+			\"clickEvent\":
+			{
+				\"action\":\"run_command\",
+				\"value\":\"/tp 2025 64 2030\"
+			}
+		},
+		{
+			\"text\":\"\n\n\",
+			\"bold\":\"false\"
+		},
+		{
+			\"text\":\"[New Game] \",
+			\"bold\":\"true\",
+			\"clickEvent\":
+			{
+				\"action\":\"run_command\",
+				\"value\":\"/setblock -63 3 -96 minecraft:redstone_block\"
 			}
 		}
 		]"
