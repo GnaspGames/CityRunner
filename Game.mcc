@@ -1,3 +1,13 @@
+<# TRIGGER Start
+# Allow players to trigger the start of a game
+
+clock_trigger_start:
+	/execute @a[score_trigger_start_min=1] ~ ~ ~ 
+		scoreboard players set @e[name=strip_start_countdown] strips 1
+	/execute @a[score_trigger_start_min=1] ~ ~ ~ 
+		scoreboard players set @e[score_trigger_start_min=1] trigger_start 0
+>
+
 <# START COUNTDOWN
 # Start a countdown that leads to the game start
 
@@ -5,11 +15,16 @@
 /scoreboard players set @e[name=strip_start_countdown] strips 1
 
 strip_start_countdown:
+	# Set correct title times
 	/title @a times 0 40 20 
+	# Start countdown scoreboard
 	/scoreboard players set @e[type=ArmorStand,name=CityRunner] countdown 100
+	# Turn on countdown clock
 	/scoreboard players set @e[name=clock_countdown] clocks 1
+	# Stop players using trigger_start
+	/scoreboard players reset @a trigger_start
 
-clock_countdown:	
+clock_countdown:	/
 
 	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=100,score_countdown_min=100] ~ ~ ~ 
 		execute @a ~ ~ ~ 
@@ -77,42 +92,51 @@ strip_start:
 	
 	# Turn on fill clock for win conditions
 	/scoreboard players set @e[name=clock_winner] clocks 1
+	
+	# Put all players into adventure mode
+	/gamemode adventure @a
 >
 
 <# CHECK FOR WINNER
 
 clock_winner:
 	# Execute on anyone who gets to be directly above the finish point.
-
+		
+	# Turn self off
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		scoreboard players set @e[name=clock_winner] clocks 0
+		
+	# Run strip_win
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+		scoreboard players set @e[name=strip_win] strips 1
+		
 	# Announce winner
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
 		say "I'm the winner!"
 		
+	# Add 1 to the winners Total Wins
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
 		scoreboard players add @p total_wins 1
-		
-	# Turn off the beacon
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-		execute @e[name=cr_finish_point] ~ ~ ~ setblock ~ ~ ~ minecraft:air
-		
-	# Show "Play Again" option	
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-		tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"green","underlined":"true","clickEvent":{"action":"run_command","value":"/scoreboard players set @e[name=strip_start_countdown] strips 1"}}]
-		
-	# Clear all inventories and effects
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-		/effect @a clear
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-		/clear @a
-		
-	# Turn off fill clock for win conditions
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-		scoreboard players set @e[name=clock_winner] clocks 0
 		
 	# Remove finish point.	
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
 		scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
-		
+			
+strip_win:
 
+	# Turn off all finish point beacons (should only be 1 really)
+	/execute @e[name=cr_finish_point] ~ ~ ~ setblock ~ ~ ~ minecraft:air
+
+	# Allow all players to use trigger_start again
+	/scoreboard players enable @a trigger_start
+
+	# Show "Play Again" option	
+	/tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"green","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
+
+	# Clear all inventories and effects
+	/effect @a clear
+	/clear @a
+
+	# TEMPORARY: Put all players back to creative mode
+	/gamemode creative @a
 >

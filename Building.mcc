@@ -33,6 +33,10 @@
 
 <# SCOREBOARDS
 
+# TRIGGER
+# Use this scoreboard to allow players to trigger a new game
+/scoreboard objectives add trigger_start trigger TRIGGER START
+
 # COUNTDOWNS
 # Use this scoreboard on the main "CityRunner" ArmorStand to manage countdown events
 /scoreboard objectives add countdown dummy COUNTDOWN
