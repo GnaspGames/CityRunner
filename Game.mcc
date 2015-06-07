@@ -118,6 +118,27 @@ clock_winner:
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
 		scoreboard players add @p total_wins 1
 		
+	# Create Fireworks
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		summon FireworksRocketEntity ~ ~10 ~ 
+		{
+			LifeTime:20, FireworksItem:
+			{
+				id:401, Count:1, tag:
+				{
+					Fireworks:
+					{
+						Explosions:
+						[
+							{ Flicker:1, Trail:1, Type:1, Colors:[0], FadeColors:[0] },
+							{ Flicker:1, Trail:1, Type:2, Colors:[16777215], FadeColors:[16777215] },
+							{ Flicker:1, Trail:1, Type:4, Colors:[15000], FadeColors:[15000] }
+						]
+					}
+				}
+			}
+		}
+		
 	# Remove finish point.	
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
 		scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
