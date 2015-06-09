@@ -1,0 +1,39 @@
+#--- LOBBY MECHANICS ---#
+# Commands used to handle players movement between lobbies.
+
+<# SCOREBOARDS
+
+# Use this objective to track whether players need to be moved to a lobby
+/scoreboard objectives add lobbyStatus dummy Lobby Status
+
+# Use this objective to track whether players need to upgrade.
+# Destroy and recreate the objective each time an "upgrade worthy" change is made.
+# Use this objective to track whether players have upgraded since last change. 
+/scoreboard objectives remove walkOneCm
+/scoreboard objectives add upgrade stat.walkOneCm
+
+>
+
+clock_lobbies:
+
+	#-- Capture players at world spawn and set them to move to main lobby --#
+	/scoreboard players set @a[x=0,y=64,z=0,r=11] lobbyStatus 0
+	
+	#-- Capture players who should upgrade, and set them to move to main lobby --#
+	/scoreboard players set @a[0,64,500,rm=1,score_lobbyStatus_min=1,score_walkOneCm=50] lobbyStatus 0
+	
+	#-- Move to main lobby and set up accordingly --#
+	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
+		tp @p 0 64 500 90 0 
+	# Put into adventure gamemode
+	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
+		gamemode adventure @p
+	# Give saturation effect
+	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
+		effect @p minecraft:saturation 1000000 20 true
+	# Set spawn point to lobby
+	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
+		spawnpoint 0 64 500
+	# Give lobbyStatus 1 so that they don't go through this again.
+	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
+		scoreboard players set @p lobbyStatus 1
