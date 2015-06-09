@@ -119,7 +119,7 @@ clock_winner:
 		scoreboard players add @p total_wins 1
 		
 	# Create Fireworks
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
 		summon FireworksRocketEntity ~ ~10 ~ 
 		{
 			LifeTime:20, FireworksItem:
