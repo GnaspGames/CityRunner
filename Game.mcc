@@ -23,6 +23,7 @@ strip_start_countdown:
 	/scoreboard players set @e[name=clock_countdown] clocks 1
 	# Stop players using trigger_start
 	/scoreboard players reset @a trigger_start
+	/scoreboard players set @e[name=clock_trigger_start] clocks 0
 
 clock_countdown:	/
 
@@ -209,6 +210,7 @@ strip_win:
 
 	# Allow all players to use trigger_start again
 	/scoreboard players enable @a trigger_start
+	/scoreboard players set @e[name=clock_trigger_start] clocks 1
 
 	# Show "Play Again" option	
 	/tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"green","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
