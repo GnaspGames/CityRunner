@@ -6,11 +6,12 @@
 # Use this objective to track whether players need to be moved to a lobby
 /scoreboard objectives add lobbyStatus dummy Lobby Status
 
-# Use this objective to track whether players need to upgrade.
+# Use this objective to track whether players need to reset to lobby.
 # Destroy and recreate the objective each time an "upgrade worthy" change is made.
 # Use this objective to track whether players have upgraded since last change. 
-/scoreboard objectives remove walkOneCm
-/scoreboard objectives add upgrade stat.walkOneCm
+# See strip_resetplayers
+/scoreboard objectives add walkOneCm stat.walkOneCm
+(destroy: /scoreboard objectives remove walkOneCm)
 
 >
 
@@ -25,15 +26,30 @@ clock_lobbies:
 	#-- Move to main lobby and set up accordingly --#
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		tp @p 0 64 500 90 0 
+	
 	# Put into adventure gamemode
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		gamemode adventure @p
+	
 	# Give saturation effect
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		effect @p minecraft:saturation 1000000 20 true
+	
 	# Set spawn point to lobby
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		spawnpoint 0 64 500
+
+	# Set total wins to zero
+	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
+		scoreboard players set @p total_wins 0
+		
 	# Give lobbyStatus 1 so that they don't go through this again.
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		scoreboard players set @p lobbyStatus 1
+		
+		
+# Use this to "reset" all players back to the main lobby. 
+# Can force this with: /scoreboard players set @e[name=strip_resetplayers] strips 1
+strip_resetplayers:
+	/scoreboard objectives remove walkOneCm
+	/scoreboard objectives add walkOneCm stat.walkOneCm
