@@ -26,7 +26,7 @@
 	fill ~ ~ ~1 ~ ~ ~14 wool 15 replace redstone_block 0
 >
 
-# FILL STRIPS
+<# FILL STRIPS
 # Running on the "core" fill clock, to turn other ArmorStand fill switches on and off again.
 
 # Execute on a "queued" strip (has a score of 1), immediately turn off again.
@@ -36,7 +36,7 @@
 	fill ~ ~ ~1 ~ ~ ~14 wool 15 replace redstone_block 0
 /execute @e[score_strips_min=1] ~ ~ ~ 
 	scoreboard players set @e[score_strips_min=1] strips 0
-
+>
 
 
 	
