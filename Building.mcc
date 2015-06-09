@@ -48,9 +48,19 @@
 /scoreboard objectives add start_points dummy START POINTS
 /scoreboard objectives add finish_points dummy FINISH POINTS
  
- # WINS & PROGRESS
- # Use this scoreboard to track how many times players have won (since last reset).
+# WINS & PROGRESS
+# Use this scoreboard to track how many times players have won (since last reset).
 /scoreboard objectives add total_wins dummy Total Wins
+
+# DEATHS
+# This is used to track deaths during a race. Dying puts the player into specator mode
+/scoreboard objectives add deaths stat.deaths DEATHS
+/scoreboard objectives add timeSinceDeath stat.timeSinceDeath TIME SINCE DEATH
+/scoreboard objectives add deaths_dummy dummy DEATHS DUMMY
+
+# TEST FOR OUTPUT
+# This scoreboard is used to monitor 'testfor' command blocks SuccessCount
+/scoreboard objectives add testforOutput dummy TESTFOR OUTPUT
 >
 
 

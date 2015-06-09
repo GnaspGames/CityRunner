@@ -95,6 +95,65 @@ strip_start:
 	
 	# Put all players into adventure mode
 	/gamemode adventure @a
+	
+	# Reset DEATHS for all players
+	/scoreboard players reset @a deaths
+	/scoreboard players set @a deaths_dummy 0
+	
+	# Start clock_deaths
+	/scoreboard players set @e[name=clock_deaths] clocks 1
+>
+
+<# CHECK FOR DEAHTS
+
+clock_deaths:
+	# Tell dead players that they are out of the race
+	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
+		tellraw @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ["",{"text":"You're out of the race! ","color":"yellow","bold":"true"},{"text":"You can now spectate until the race is complete. ","color":"none","bold":"false"}]
+		
+	# Tell dead players that they are out of the race
+	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
+		execute @p ~ ~ ~ 
+			tellraw @a ["",{"selector":"@p","color":"yellow","bold":"true"},{"text":" is out of the race!","color":"yellow","bold":"true"}]
+			
+	# Update deaths_dummy to match deaths
+	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
+		scoreboard players set @p deaths_dummy 1
+
+	# Change adventure mode players to spectator when they have 1 death.
+	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
+		gamemode spectator @p
+		
+	#--- Test for no more players ---#
+	
+	# Reset testforOutput
+	/scoreboard players set @e[name=CityRunner] testforOutput -1
+	
+	/stats block ~ ~2 ~ set SuccessCount @e[name=CityRunner] testforOutput
+	/testfor @a[score_deaths_dummy_min=0,score_deaths_dummy=0]
+	
+	# Stop self
+	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+		scoreboard players set @e[name=clock_deaths] clocks 0
+	
+	# Tell everyone the game is over
+	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+		tellraw @a ["",{"text":"Race over! ","color":"yellow","bold":"true"},{"text":"There's nobody left alive to win...","color":"none","bold":"false"}]
+		
+	# Turn clock_winner off
+	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+		scoreboard players set @e[name=clock_winner] clocks 0
+		
+	# Run strip_win
+	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+		scoreboard players set @e[name=strip_win] strips 1
+		
+	# Turn off finish point
+	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+		scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
+		
+	# Reset testforOutput
+	/scoreboard players set @e[name=CityRunner] testforOutput -1
 >
 
 <# CHECK FOR WINNER
@@ -160,4 +219,11 @@ strip_win:
 
 	# TEMPORARY: Put all players back to creative mode
 	/gamemode creative @a
+	
+	# Stop clock_deaths
+	/scoreboard players set @e[name=clock_deaths] clocks 0
+	
+	# Reset all death counts
+	/scoreboard players reset @a deaths
+	
 >
