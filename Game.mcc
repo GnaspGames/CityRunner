@@ -75,7 +75,7 @@ strip_start:
 	/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ scoreboard players set @e[name=cr_start_spawn,r=10] start_points 1
 	# Send players to a random spawn point.
 	/execute @a ~ ~ ~ tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
-	/execute @a ~ ~ ~ spawnpoint
+	/execute @a ~ ~ ~ spawnpoint ~ ~ ~
 			
 	# Reset start point scores
 	/scoreboard players set @e[type=ArmorStand,name=cr_start_point] start_points 0
