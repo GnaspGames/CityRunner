@@ -134,23 +134,23 @@ clock_deaths:
 	/testfor @a[score_deaths_dummy_min=0,score_deaths_dummy=0]
 	
 	# Stop self
-	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
 		scoreboard players set @e[name=clock_deaths] clocks 0
 	
 	# Tell everyone the game is over
-	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
 		tellraw @a ["",{"text":"Race over!\n","color":"yellow","bold":"true"},{"text":"There's nobody left alive to win...","color":"none","bold":"false"}]
 		
 	# Turn clock_winner off
-	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
 		scoreboard players set @e[name=clock_winner] clocks 0
 		
 	# Run strip_win
-	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
 		scoreboard players set @e[name=strip_win] strips 1
 		
 	# Turn off finish point
-	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
+	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
 		scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
 		
 	# Reset testforOutput
