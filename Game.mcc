@@ -110,7 +110,7 @@ strip_start:
 clock_deaths:
 	# Tell dead players that they are out of the race
 	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
-		tellraw @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ["",{"text":"You're out of the race! ","color":"yellow","bold":"true"},{"text":"You can now spectate until the race is complete. ","color":"none","bold":"false"}]
+		tellraw @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ["",{"text":"You're out of the race!\n","color":"yellow","bold":"true"},{"text":"You can now spectate until the race is complete. ","color":"none","bold":"false"}]
 		
 	# Tell dead players that they are out of the race
 	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
@@ -139,7 +139,7 @@ clock_deaths:
 	
 	# Tell everyone the game is over
 	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
-		tellraw @a ["",{"text":"Race over! ","color":"yellow","bold":"true"},{"text":"There's nobody left alive to win...","color":"none","bold":"false"}]
+		tellraw @a ["",{"text":"Race over!\n","color":"yellow","bold":"true"},{"text":"There's nobody left alive to win...","color":"none","bold":"false"}]
 		
 	# Turn clock_winner off
 	/execute @e[name=CityRunner,score_testforOutput=0] ~ ~ ~ 
@@ -172,7 +172,7 @@ clock_winner:
 		
 	# Announce winner
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
-		say "I'm the winner!"
+		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" wins the race! ","color":"green","bold":"true"}]
 		
 	# Add 1 to the winners Total Wins
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
@@ -213,7 +213,7 @@ strip_win:
 	/scoreboard players set @e[name=clock_trigger_start] clocks 1
 
 	# Show "Play Again" option	
-	/tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"green","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
+	/tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"white","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
 
 	# Clear all inventories and effects
 	/effect @a clear
