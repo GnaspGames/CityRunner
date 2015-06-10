@@ -105,6 +105,65 @@ strip_start:
 	/scoreboard players set @e[name=clock_deaths] clocks 1
 >
 
+#--- POWER UPS ---#
+<
+strip_start_powerups:
+	/scoreboard players set @e[name=CityRunner] countdown 1200 # TODO: Consider making this random ()between 15 seconds and 2 minutes etc)
+	/scoreboard players set @e[name=clock_powerups] clocks 1
+
+clock_powerups:
+	/execute @e[name=CityRunner,score_countdown=0,score_countdown_min=0] ~ ~ ~ 
+		/scoreboard players set @e[name=strip_give_powerups] strips 1
+		
+	/scoreboard players remove @e[name=CityRunner] countdown 1
+
+strip_give_powerups:
+	
+	# Start by summoning markers to east/north/west/south of each player
+	# EAST FACING
+	/execute @a[rym=-135,ry=-45] ~ ~ ~ 
+		summon ArmorStand ~ ~ ~5 {CustomName:"cr_powerup",Marker:true,Invisible:true}
+		
+	# NORTH FACING
+	/execute @a[rym=135,ry=-135]~ ~ ~ 
+		summon ArmorStand ~-5 ~ ~ {CustomName:"cr_powerup",Marker:true,Invisible:true}
+	
+	# WEST FACING
+	/execute @a[rym=46,ry=135] ~ ~ ~ 
+		summon ArmorStand ~ ~ ~-5 {CustomName:"cr_powerup",Marker:true,Invisible:true}
+	
+	# SOUTH FACING
+	/execute @a[rym=-45,ry=45] ~ ~ ~ 
+		summon ArmorStand ~5 ~ ~ {CustomName:"cr_powerup",Marker:true,Invisible:true}
+		
+	# Then summon FallingSand above each marker
+	/execute @e[name=cr_powerup] ~ ~ ~
+		summon FallingSand ~ ~100 ~ {CustomName:"cr_falling_powerup",Block:double_wooden_slab,Data:1,Time:100,DropItem:0}
+		
+	# Kill all markers
+	/kill @e[name=cr_powerup]
+		
+	# Now, track the FallingSand until it hits the ground, then replace with chest.
+	/scoreboard players set @e[name=cr_falling_powerup,type=FallingSand] power_ups 0
+	
+	/execute @e[name=cr_falling_powerup,type=FallingSand] ~ ~-1 ~ detect ~ ~ ~ minecraft:air 0 
+		scoreboard players set @e[name=cr_falling_powerup,type=FallingSand,c=1] power_ups 1
+		
+	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+		setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- SupplyDrop -,Items:[{Slot:0,id:stone,Count:1},{Slot:8,id:sponge,Count:1},{Slot:10,id:iron_sword,Count:1},{Slot:12,id:furnace,Count:1},{Slot:15,id:chest,Count:1},{Slot:22,id:obsidian,Count:1}]}
+		
+	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=1] ~ ~ ~ 
+		summon FireworksRocketEntity ~ ~ ~ {FireworksItem:{id:fireworks,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Trail:1,Colors:[15123255],FadeColors:[15335257]}]}}}}
+	
+	# Run strip_start_powerups again.
+	/scoreboard players set @e[name=strip_start_powerups] strips 1
+	
+strip_cancel_powerups:
+	# Turn off clock and reset countdown
+	/scoreboard players set @e[name=clock_powerups] clocks 0
+	/scoreboard players set @e[name=CityRunner] countdown 0
+>
+
 <# CHECK FOR DEAHTS
 
 clock_deaths:

@@ -52,6 +52,10 @@
 # Use this scoreboard to track how many times players have won (since last reset).
 /scoreboard objectives add total_wins dummy Total Wins
 
+# POWER UPS
+# Use this to track powerups falling from the sky
+/scoreboard objectives add power_ups dummy POWER UPS
+
 # DEATHS
 # This is used to track deaths during a race. Dying puts the player into specator mode
 /scoreboard objectives add deaths stat.deaths DEATHS
