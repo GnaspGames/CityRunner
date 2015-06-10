@@ -1,7 +1,8 @@
 #--- CORE MECHANICS ---#
 # Core command block code used for handling fill clocks, fill strips etc
 
-<# SCOREBOARDS
+#-- SCOREBOARDS --#
+<
 
 # CLOCKS
 # Use this scoreboard to control fill clocks. ArmorStands with a score of 1 will act as fill clocks
@@ -12,7 +13,8 @@
 /scoreboard objectives add strips dummy STRIPS
 >
 
-<# FILL CLOCKS
+#-- FILL CLOCKS --#
+<
 # Running on a standard fill clock, to switch other ArmorStand fill clocks on or off.
 
 # Execute on "active" clocks
@@ -26,7 +28,8 @@
 	fill ~ ~ ~1 ~ ~ ~14 wool 15 replace redstone_block 0
 >
 
-<# FILL STRIPS
+#-- FILL STRIPS -- #
+<
 # Running on the "core" fill clock, to turn other ArmorStand fill switches on and off again.
 
 # Execute on a "queued" strip (has a score of 1), immediately turn off again.
