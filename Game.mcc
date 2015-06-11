@@ -302,6 +302,6 @@ strip_win:
 	/scoreboard players reset @a deaths
 	
 	# Stop the power ups, call strip_cancel_powerups
-	/scoreboard players set @e[name=strip_cancel_powerups] strips 1
+	/scoreboard players set @e[name=CityRunner] countdown 400
 	
 >
