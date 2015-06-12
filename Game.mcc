@@ -177,8 +177,8 @@ strip_cancel_powerups:
 	/scoreboard players set @e[name=clock_powerups] clocks 0
 	# Kill any power ups that are falling
 	/kill @e[name=cr_falling_powerup,type=FallingSand]
-	# Reset the counter
-	/scoreboard players set @e[name=CityRunner] countdown 0
+	# Disable counter. Set to -1 so that last run of clock_powerups doesn't trigger a new powerup.
+	/scoreboard players set @e[name=CityRunner] countdown -1
 	# Remove left over powerups
 	/execute @e[name=cr_powerup_position] ~ ~ ~ 
 		setblock ~ ~ ~ minecraft:air 0
