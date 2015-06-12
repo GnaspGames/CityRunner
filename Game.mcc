@@ -116,7 +116,7 @@ strip_start:
 # TODO: Consider making the countdown length random, or different
 
 strip_start_powerups:
-	/scoreboard players set @e[name=CityRunner] countdown 400
+	/scoreboard players set @e[name=CityRunner] countdown 600
 	/scoreboard players set @e[name=clock_powerups] clocks 1
 
 clock_powerups:
@@ -147,30 +147,30 @@ strip_give_powerups:
 	
 	# Start by summoning markers to east/north/west/south of each player
 	# EAST FACING
-	/execute @a[rym=-135,ry=-45] ~ ~ ~ 
-		summon ArmorStand ~ ~ ~5 {CustomName:"cr_powerup",Marker:true,Invisible:true}
+	/execute @a[m=2,rym=-135,ry=-45] ~ ~ ~ 
+		summon ArmorStand ~10 ~ ~ {CustomName:"cr_powerup",Marker:true,Invisible:true}
 		
 	# NORTH FACING
-	/execute @a[rym=135,ry=-135]~ ~ ~ 
-		summon ArmorStand ~-5 ~ ~ {CustomName:"cr_powerup",Marker:true,Invisible:true}
+	/execute @a[m=2,rym=135,ry=-135]~ ~ ~ 
+		summon ArmorStand ~ ~ ~-10 {CustomName:"cr_powerup",Marker:true,Invisible:true}
 	
 	# WEST FACING
-	/execute @a[rym=46,ry=135] ~ ~ ~ 
-		summon ArmorStand ~ ~ ~-5 {CustomName:"cr_powerup",Marker:true,Invisible:true}
+	/execute @a[m=2,rym=46,ry=135] ~ ~ ~ 
+		summon ArmorStand ~-10 ~ ~ {CustomName:"cr_powerup",Marker:true,Invisible:true}
 	
 	# SOUTH FACING
-	/execute @a[rym=-45,ry=45] ~ ~ ~ 
-		summon ArmorStand ~5 ~ ~ {CustomName:"cr_powerup",Marker:true,Invisible:true}
+	/execute @a[m=2,rym=-45,ry=45] ~ ~ ~ 
+		summon ArmorStand ~ ~ ~10 {CustomName:"cr_powerup",Marker:true,Invisible:true}
 		
 	# Then summon FallingSand above each marker - clock_powerups catches this.
-	/execute @e[name=cr_powerup] ~ ~ ~
+	/execute @e[name=cr_powerup] ~ ~ ~ 
 		summon FallingSand ~ ~100 ~ {CustomName:"cr_falling_powerup",Block:double_wooden_slab,Data:1,Time:100,DropItem:0}
 		
 	# Kill all markers
 	/kill @e[name=cr_powerup]
 		
 	# Run strip_start_powerups again.
-	/scoreboard players set @e[name=strip_start_powerups] strips 1
+	/scoreboard players set @e[name=CityRunner] countdown 600
 	
 strip_cancel_powerups:
 	# Turn off clock and reset countdown
@@ -245,23 +245,23 @@ clock_winner:
 	# Execute on anyone who gets to be directly above the finish point.
 		
 	# Turn self off
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
 		scoreboard players set @e[name=clock_winner] clocks 0
 		
 	# Run strip_win
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
 		scoreboard players set @e[name=strip_win] strips 1
 		
 	# Announce winner
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" wins the race! ","color":"green","bold":"true"}]
 		
 	# Add 1 to the winners Total Wins
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
 		scoreboard players add @p total_wins 1
 		
 	# Create Fireworks
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
 		summon FireworksRocketEntity ~ ~10 ~ 
 		{
 			LifeTime:20, FireworksItem:
@@ -282,7 +282,7 @@ clock_winner:
 		}
 		
 	# Remove finish point.	
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[dy=200] ~ ~ ~ 
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
 		scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
 			
 strip_win:
