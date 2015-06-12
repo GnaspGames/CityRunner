@@ -136,6 +136,9 @@ clock_powerups:
 	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
 		setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- SupplyDrop -,Items:[{Slot:0,id:stone,Count:1},{Slot:8,id:sponge,Count:1},{Slot:10,id:iron_sword,Count:1},{Slot:12,id:furnace,Count:1},{Slot:15,id:chest,Count:1},{Slot:22,id:obsidian,Count:1}]}
 		
+	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+		summon ArmorStand ~ ~ ~ {CustomName:"cr_powerup_position",Marker:true,Invisible:true}
+		
 	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=1] ~ ~ ~ 
 		summon FireworksRocketEntity ~ ~ ~ {FireworksItem:{id:fireworks,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Trail:1,Colors:[15123255],FadeColors:[15335257]}]}}}}
 	
@@ -176,6 +179,12 @@ strip_cancel_powerups:
 	/kill @e[name=cr_falling_powerup,type=FallingSand]
 	# Reset the counter
 	/scoreboard players set @e[name=CityRunner] countdown 0
+	# Remove left over powerups
+	/execute @e[name=cr_powerup_location] ~ ~ ~
+		setblock ~ ~ ~ minecraft:air 0
+	# Remove cr_powerup_position
+	/kill @e[name=cr_powerup_position]
+	
 >
 
 <# CHECK FOR DEAHTS
