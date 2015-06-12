@@ -180,7 +180,7 @@ strip_cancel_powerups:
 	# Reset the counter
 	/scoreboard players set @e[name=CityRunner] countdown 0
 	# Remove left over powerups
-	/execute @e[name=cr_powerup_location] ~ ~ ~
+	/execute @e[name=cr_powerup_position] ~ ~ ~ 
 		setblock ~ ~ ~ minecraft:air 0
 	# Remove cr_powerup_position
 	/kill @e[name=cr_powerup_position]
