@@ -1,4 +1,5 @@
-<# TRIGGER Start
+#--- TRIGGER START ---#
+<
 # Allow players to trigger the start of a game
 
 clock_trigger_start:
@@ -8,7 +9,8 @@ clock_trigger_start:
 		scoreboard players set @e[score_trigger_start_min=1] trigger_start 0
 >
 
-<# START COUNTDOWN
+#--- START COUNTDOWN ---#
+<
 # Start a countdown that leads to the game start
 
 # To start, use: 
@@ -62,8 +64,8 @@ clock_countdown:	/
 >
 
 
-# START GAME
-<# START GAME 
+#--- START GAME ---#
+<
 
 # To start a new game:
 /scoreboard players set @e[name=strip_start] strips 1
@@ -187,7 +189,8 @@ strip_cancel_powerups:
 	
 >
 
-<# CHECK FOR DEAHTS
+#--- CHECK FOR DEAHTS ---#
+<
 
 clock_deaths:
 	# Tell dead players that they are out of the race
@@ -239,7 +242,8 @@ clock_deaths:
 	/scoreboard players set @e[name=CityRunner] testforOutput -1
 >
 
-<# CHECK FOR WINNER
+#--- CHECK FOR WINNER ---#
+<
 
 clock_winner:
 	# Execute on anyone who gets to be directly above the finish point.

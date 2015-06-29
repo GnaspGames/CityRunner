@@ -1,7 +1,8 @@
 #--- LOBBY MECHANICS ---#
 # Commands used to handle players movement between lobbies.
 
-<# SCOREBOARDS
+#-- SCOREBOARDS --#
+<
 
 # Use this objective to track whether players need to be moved to a lobby
 /scoreboard objectives add lobbyStatus dummy Lobby Status
@@ -14,6 +15,9 @@
 (destroy: /scoreboard objectives remove walkOneCm)
 
 >
+
+#-- LOBBY CLOCK --#
+<
 
 clock_lobbies:
 
@@ -47,9 +51,15 @@ clock_lobbies:
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		scoreboard players set @p lobbyStatus 1
 		
+>
+
+#--- RESET PLAYERS---#
+<
 		
 # Use this to "reset" all players back to the main lobby. 
 # Can force this with: /scoreboard players set @e[name=strip_resetplayers] strips 1
 strip_resetplayers:
 	/scoreboard objectives remove walkOneCm
 	/scoreboard objectives add walkOneCm stat.walkOneCm
+	
+>
