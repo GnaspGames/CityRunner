@@ -117,9 +117,22 @@ strip_start:
 # TODO: Remove power ups at the end of the race
 # TODO: Consider making the countdown length random, or different
 
+random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 1
+random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 2
+random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 3
+random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 4
+
 strip_start_powerups:
-	/scoreboard players set @e[name=CityRunner] countdown 600
+	/scoreboard players set @e[name=strip_cycle_powerups] strips 1
 	/scoreboard players set @e[name=clock_powerups] clocks 1
+	
+strip_cycle_powerups:
+	/scoreboard players set @e[name=CityRunner] countdown 600
+	/execute @r[name=power_up_option] ~ ~ ~ 
+		setblock ~ ~ ~ redstone_block 0
+	/execute @e[name=power_up_option] ~ ~ ~ 
+		setblock ~ ~ ~ wool 15
+	
 
 clock_powerups:
 	# Check countdown to trigger new power up creation
@@ -135,8 +148,21 @@ clock_powerups:
 	/execute @e[name=cr_falling_powerup,type=FallingSand] ~ ~-1 ~ detect ~ ~ ~ minecraft:air 0 
 		scoreboard players set @e[name=cr_falling_powerup,type=FallingSand,c=1] power_ups 1
 		
-	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
-		setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- SupplyDrop -,Items:[{Slot:0,id:stone,Count:1},{Slot:8,id:sponge,Count:1},{Slot:10,id:iron_sword,Count:1},{Slot:12,id:furnace,Count:1},{Slot:15,id:chest,Count:1},{Slot:22,id:obsidian,Count:1}]}
+	/execute @e[name=CityRunner,score_power_up_option=1,score_power_up_option_min=1] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:ender_pearl,Count:3}]}
+			
+	/execute @e[name=CityRunner,score_power_up_option=2,score_power_up_option_min=2] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:1,Amplifier:5,Duration:600}],display:{Name: "Speed Boost"}}}]}
+			
+	/execute @e[name=CityRunner,score_power_up_option=3,score_power_up_option_min=3] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:8,Amplifier:5,Duration:600}],display:{Name: "Jump Boost"}}}]}
+			
+	/execute @e[name=CityRunner,score_power_up_option=4,score_power_up_option_min=4] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:iron_sword,Count:3,tag:{display:{Name:"Blade Runner"}}}]}
 		
 	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
 		summon ArmorStand ~ ~ ~ {CustomName:"cr_powerup_position",Marker:true,Invisible:true}
@@ -172,7 +198,7 @@ strip_give_powerups:
 	/kill @e[name=cr_powerup]
 		
 	# Run strip_start_powerups again.
-	/scoreboard players set @e[name=CityRunner] countdown 600
+	/scoreboard players set @e[name=strip_cycle_powerups] strips 1
 	
 strip_cancel_powerups:
 	# Turn off clock and reset countdown

@@ -55,6 +55,8 @@
 # POWER UPS
 # Use this to track powerups falling from the sky
 /scoreboard objectives add power_ups dummy POWER UPS
+# Use this to preselect a random power up option to be used
+/scoreboard objectives add power_up_option dummy POWER UP OPTION
 
 # DEATHS
 # This is used to track deaths during a race. Dying puts the player into specator mode
