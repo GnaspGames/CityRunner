@@ -144,42 +144,47 @@ clock_powerups:
 	# Countdown each tick
 	/scoreboard players remove @e[name=CityRunner] countdown 1
 	
-	# Now, track FallingSand (created by strip_give_powerups) until it hits the ground, then replace with chest.
-	/scoreboard players set @e[name=cr_falling_powerup,type=FallingSand] power_ups 0
+	# Now, track cr_falling_powerup (created by strip_give_powerups) until it hits the ground, then create a chest.
+	/scoreboard players set @e[name=cr_falling_powerup] power_ups 0
 	
-	/execute @e[name=cr_falling_powerup,type=FallingSand] ~ ~-1 ~ detect ~ ~ ~ minecraft:air 0 
-		scoreboard players set @e[name=cr_falling_powerup,type=FallingSand,c=1] power_ups 1
+	/execute @e[name=cr_falling_powerup] ~ ~-1 ~ detect ~ ~ ~ minecraft:air 0 
+		scoreboard players set @p[name=cr_falling_powerup,type=ArmorStand] power_ups 1
 		
+	# If score is 1, it's still in the air. Show fireworks.
+	/execute @e[name=cr_falling_powerup,score_power_ups=1] ~ ~ ~ 
+		summon FireworksRocketEntity ~ ~ ~ {FireworksItem:{id:fireworks,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Trail:1,Colors:[15123255],FadeColors:[15335257]}]}}}}
+		
+	# If score is 0, it's now on the ground. Summon a chest and so on.
 	/execute @e[name=CityRunner,score_power_up_option=1,score_power_up_option_min=1] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:ender_pearl,Count:3}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=2,score_power_up_option_min=2] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~  
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:1,Amplifier:10,Duration:600}],display:{Name: "Speed Boost"}}}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=3,score_power_up_option_min=3] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:8,Amplifier:20,Duration:600}],display:{Name: "Jump Boost"}}}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=4,score_power_up_option_min=4] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:iron_sword,Count:1,tag:{display:{Name:"Blade Runner"}}}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=5,score_power_up_option_min=5] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:bow,Count:1},{Slot:14,id:arrow,Count:5}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=6,score_power_up_option_min=6] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:deadbush,Count:1,tag:{display:{Name:"trolololol bush"}}}]}
-
-	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
-		summon ArmorStand ~ ~ ~ {CustomName:"cr_powerup_position",Marker:true,Invisible:true}
-		
-	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=1] ~ ~ ~ 
+			
+	# Summon final FireworksRocketEntity for landing
+	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
 		summon FireworksRocketEntity ~ ~ ~ {FireworksItem:{id:fireworks,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Trail:1,Colors:[15123255],FadeColors:[15335257]}]}}}}
-	
+			
+	# Replace cr_falling_powerup with cr_powerup_position
+	/entitydata @e[name=cr_falling_powerup,score_power_ups=0] {CustomName:"cr_powerup_position"}
 
 strip_give_powerups:
 	
@@ -200,9 +205,9 @@ strip_give_powerups:
 	/execute @a[m=2,rym=-45,ry=45] ~ ~ ~ 
 		summon ArmorStand ~ ~ ~10 {CustomName:"cr_powerup",Marker:true,Invisible:true}
 		
-	# Then summon FallingSand above each marker - clock_powerups catches this.
+	# Then summon Invisible ArmorStand above each marker - clock_powerups catches this.
 	/execute @e[name=cr_powerup] ~ ~ ~ 
-		summon FallingSand ~ ~100 ~ {CustomName:"cr_falling_powerup",Block:double_wooden_slab,Data:1,Time:100,DropItem:0}
+		summon ArmorStand ~ ~100 ~ {CustomName:"cr_falling_powerup",Invisible:true,Marker:true}
 		
 	# Kill all markers
 	/kill @e[name=cr_powerup]
@@ -214,7 +219,7 @@ strip_cancel_powerups:
 	# Turn off clock and reset countdown
 	/scoreboard players set @e[name=clock_powerups] clocks 0
 	# Kill any power ups that are falling
-	/kill @e[name=cr_falling_powerup,type=FallingSand]
+	/kill @e[name=cr_falling_powerup]
 	# Disable counter. Set to -1 so that last run of clock_powerups doesn't trigger a new powerup.
 	/scoreboard players set @e[name=CityRunner] countdown -1
 	# Remove left over powerups
