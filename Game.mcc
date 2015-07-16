@@ -130,9 +130,9 @@ strip_start_powerups:
 strip_cycle_powerups:
 	/scoreboard players set @e[name=CityRunner] countdown 600
 	/execute @r[name=power_up_option] ~ ~ ~ 
-		setblock ~ ~ ~ redstone_block 0
+		setblock ~ ~-1 ~ redstone_block 0
 	/execute @e[name=power_up_option] ~ ~ ~ 
-		setblock ~ ~ ~ wool 15
+		setblock ~ ~-1 ~ wool 15
 	
 
 clock_powerups:
