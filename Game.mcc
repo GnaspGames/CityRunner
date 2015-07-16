@@ -108,6 +108,9 @@ strip_start:
 	
 	# Start strip_start_powerups
 	/scoreboard players set @e[name=strip_start_powerups] strips 1
+	
+	# Give everyone full health
+	/effect @a minecraft:regeneration 1 20
 >
 
 #--- POWER UPS ---#
