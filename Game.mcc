@@ -155,11 +155,11 @@ clock_powerups:
 			
 	/execute @e[name=CityRunner,score_power_up_option=2,score_power_up_option_min=2] ~ ~ ~ 
 		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
-			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:1,Amplifier:5,Duration:600}],display:{Name: "Speed Boost"}}}]}
+			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:1,Amplifier:10,Duration:600}],display:{Name: "Speed Boost"}}}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=3,score_power_up_option_min=3] ~ ~ ~ 
 		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
-			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:8,Amplifier:5,Duration:600}],display:{Name: "Jump Boost"}}}]}
+			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:8,Amplifier:20,Duration:600}],display:{Name: "Jump Boost"}}}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=4,score_power_up_option_min=4] ~ ~ ~ 
 		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
@@ -169,7 +169,6 @@ clock_powerups:
 		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:bow,Count:1},{Slot:14,id:arrow,Count:5}]}
 
-		
 	/execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
 		summon ArmorStand ~ ~ ~ {CustomName:"cr_powerup_position",Marker:true,Invisible:true}
 		
