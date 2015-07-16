@@ -79,10 +79,13 @@ strip_start:
 	/execute @a ~ ~ ~ tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
 	/execute @a ~ ~ ~ spawnpoint ~ ~ ~
 			
+	# Clear all inventories
+	/clear @a
+			
 	# Reset start point scores
 	/scoreboard players set @e[type=ArmorStand,name=cr_start_point] start_points 0
 	/scoreboard players set @e[type=ArmorStand,name=cr_start_spawn] start_points 0
-
+	
 	# Give players starting effects
 	/effect @a minecraft:speed 1000 3
 	/give @a minecraft:ender_pearl 5
@@ -111,9 +114,6 @@ strip_start:
 	
 	# Give everyone full health
 	/effect @a minecraft:regeneration 1 20
-	
-	# Clear all inventories
-	/clear @a
 >
 
 #--- POWER UPS ---#
