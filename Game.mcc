@@ -154,10 +154,10 @@ clock_powerups:
 	
 	/scoreboard players set @e[name=cr_falling_powerup] power_ups 0 {OnGround:1b} 
 	
-	# If score is 1, it's still in the air. Show fireworks.
+	# If score is 1, it's still in the air, show fireworks spark
 	/execute @e[name=cr_falling_powerup,score_power_ups=1] ~ ~ ~ 
-		summon FireworksRocketEntity ~ ~ ~ {FireworksItem:{id:fireworks,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Trail:1,Colors:[15123255],FadeColors:[15335257]}]}}}}
-		
+		particle fireworksSpark ~ ~2 ~ 0.2 0 0.2 0.1 100 force
+	
 	# If score is 0, it's now on the ground. Summon a chest and so on.
 	/execute @e[name=CityRunner,score_power_up_option=1,score_power_up_option_min=1] ~ ~ ~ 
 		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
@@ -183,9 +183,13 @@ clock_powerups:
 		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:deadbush,Count:1,tag:{display:{Name:"trolololol bush"}}}]}
 			
-	# Summon final FireworksRocketEntity for landing
+	# Summon final fireworksSpark for landing: bigger to signify impact.	
 	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
-		summon FireworksRocketEntity ~ ~ ~ {FireworksItem:{id:fireworks,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Trail:1,Colors:[15123255],FadeColors:[15335257]}]}}}}
+		particle fireworksSpark ~ ~2 ~ 1 1 1 0.1 200 force
+		
+	# Play sound to replace fireworks sound
+	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
+		playsound random.explode @a ~ ~ ~ 1 1 1
 			
 	# Replace cr_falling_powerup with cr_powerup_position
 	/entitydata @e[name=cr_falling_powerup,score_power_ups=0] {CustomName:"cr_powerup_position"}
@@ -218,6 +222,9 @@ strip_give_powerups:
 		
 	# Run strip_start_powerups again.
 	/scoreboard players set @e[name=strip_cycle_powerups] strips 1
+	
+	# Play a thunder sound
+	/playsound ambient.weather.thunder @a ~ ~ ~ 0.2 1 0.2
 	
 strip_cancel_powerups:
 	# Turn off clock and reset countdown
