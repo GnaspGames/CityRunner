@@ -145,11 +145,10 @@ clock_powerups:
 	/scoreboard players remove @e[name=CityRunner] countdown 1
 	
 	# Now, track cr_falling_powerup (created by strip_give_powerups) until it hits the ground, then create a chest.
-	/scoreboard players set @e[name=cr_falling_powerup] power_ups 0
+	/scoreboard players set @e[name=cr_falling_powerup] power_ups 1
 	
-	/execute @e[name=cr_falling_powerup] ~ ~-1 ~ detect ~ ~ ~ minecraft:air 0 
-		scoreboard players set @p[name=cr_falling_powerup,type=ArmorStand] power_ups 1
-		
+	/scoreboard players set @e[name=cr_falling_powerup] power_ups 0 {OnGround:1b} 
+	
 	# If score is 1, it's still in the air. Show fireworks.
 	/execute @e[name=cr_falling_powerup,score_power_ups=1] ~ ~ ~ 
 		summon FireworksRocketEntity ~ ~ ~ {FireworksItem:{id:fireworks,Count:1,tag:{Fireworks:{Explosions:[{Type:4,Trail:1,Colors:[15123255],FadeColors:[15335257]}]}}}}
