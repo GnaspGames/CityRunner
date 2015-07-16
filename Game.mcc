@@ -111,6 +111,9 @@ strip_start:
 	
 	# Give everyone full health
 	/effect @a minecraft:regeneration 1 20
+	
+	# Clear all inventories
+	/clear @a
 >
 
 #--- POWER UPS ---#
