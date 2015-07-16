@@ -164,7 +164,7 @@ clock_powerups:
 			
 	/execute @e[name=CityRunner,score_power_up_option=4,score_power_up_option_min=4] ~ ~ ~ 
 		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
-			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:iron_sword,Count:3,tag:{display:{Name:"Blade Runner"}}}]}
+			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:iron_sword,Count:1,tag:{display:{Name:"Blade Runner"}}}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=5,score_power_up_option_min=5] ~ ~ ~ 
 		execute @e[name=cr_falling_powerup,type=FallingSand,score_power_ups=0] ~ ~ ~ 
