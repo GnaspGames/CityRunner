@@ -51,6 +51,26 @@ clock_lobbies:
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		scoreboard players set @p lobbyStatus 1
 		
+clock_lobby_options:
+
+	/execute @e[name=cr_give_book] ~ ~ ~ 
+		execute @a[r=0,score_hasIntroBook=0] ~ ~ ~ 
+			give @p written_book 1 0 
+			{
+				pages:
+				[],
+				title:"City Runner Introduction",
+				author:Gnasp
+			} 
+			
+	/execute @e[name=cr_give_book] ~ ~ ~ execute @a[r=0,score_hasIntroBook=0] ~ ~ ~ say Welcome
+			
+	/execute @e[name=cr_give_book] ~ ~ ~ 
+		scoreboard players set @a[r=0,score_hasIntroBook=0] hasIntroBook 1
+		
+	/execute @e[name=cr_give_book] ~ ~ ~ 
+		scoreboard players set @a[rm=1] hasIntroBook 0
+		
 >
 
 #--- RESET PLAYERS---#

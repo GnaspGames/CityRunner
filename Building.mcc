@@ -67,6 +67,10 @@
 # TEST FOR OUTPUT
 # This scoreboard is used to monitor 'testfor' command blocks SuccessCount
 /scoreboard objectives add testforOutput dummy TESTFOR OUTPUT
+
+# LOBBY OPTIONS
+/scoreboard objectives add hasIntroBook dummy HAS INTRO BOOK
+
 >
 
 
