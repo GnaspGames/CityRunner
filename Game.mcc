@@ -87,7 +87,7 @@ strip_start:
 	/scoreboard players set @e[type=ArmorStand,name=cr_start_spawn] start_points 0
 	
 	# Give players starting effects
-	/effect @a minecraft:speed 1000 3
+	/effect @a minecraft:speed 1000 3 true
 	/give @a minecraft:ender_pearl 5
 	
 	# Choose a new Finish Point
