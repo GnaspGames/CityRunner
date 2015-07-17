@@ -27,6 +27,10 @@ clock_lobbies:
 	#-- Capture players who should upgrade, and set them to move to main lobby --#
 	/scoreboard players set @a[0,64,500,rm=1,score_lobbyStatus_min=1,score_walkOneCm=50] lobbyStatus 0
 	
+	#-- Capture players who should upgrade, and set them to move to main lobby --#
+	/execute @e[name=cr_goto_lobby] ~ ~ ~ 
+		scoreboard players set @a[r=2] lobbyStatus 0
+	
 	#-- Move to main lobby and set up accordingly --#
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		tp @p 0 64 500 90 0 
@@ -85,11 +89,11 @@ clock_lobby_options:
 	
 	/execute @e[name=cr_enter_city] ~ ~ ~ 
 		execute @a[r=0] ~ ~ ~ 
-			title @p title ["",{"text":"Welcome to Carrera City!"}]
+			title @p title ["",{"text":"Carrera City"}]
 			
 	/execute @e[name=cr_enter_city] ~ ~ ~ 
 		execute @a[r=0] ~ ~ ~ 
-			title @p subtitle ["",{"text":"See the chat area for options"}]
+			title @p subtitle ["",{"text":"Welcome! See the chat area for options"}]
 			
 	/execute @e[name=cr_enter_city] ~ ~ ~ 
 		execute @a[r=0] ~ ~ ~ 
@@ -100,9 +104,10 @@ clock_lobby_options:
 		execute @a[r=0] ~ ~ ~ 
 			gamemode creative @p
 			
+	# Teleport point different to spawnpoint for better view
 	/execute @e[name=cr_enter_city] ~ ~ ~ 
 		execute @a[r=0] ~ ~ ~ 
-			tp @p 2043 65 2046
+			tp @p 2044 64 2038 155 -20
 	
 
 	# CREDITS BOOK
