@@ -114,6 +114,12 @@ strip_start:
 	
 	# Give everyone full health
 	/effect @a minecraft:regeneration 1 20
+	
+	# Put the "Distance" scoreboard on display
+	/scoreboard objectives setdisplay sidebar distance
+	
+	# Turn on clock_distance
+	/scoreboard players set @e[name=clock_distance] clocks 1
 >
 
 #--- POWER UPS ---#
@@ -244,6 +250,68 @@ strip_cancel_powerups:
 	
 >
 
+
+#--- DISTANCE FROM FINISH ---#
+<
+
+clock_distance:
+
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=1,r=2] distance -1
+
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=2,r=3] distance -2
+
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=3,r=4] distance -3
+
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=4,r=5] distance -4
+
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=5,r=10] distance -5
+
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=10,r=15] distance -10
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=15,r=20] distance -15
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~  
+		scoreboard players set @a[m=2,rm=20,r=25] distance -20
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~  
+		scoreboard players set @a[m=2,rm=25,r=30] distance -25
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=30,r=40] distance -30
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=40,r=50] distance -40
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=50,r=100] distance -50
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=100,r=150] distance -100
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=150,r=200] distance -150
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=200,r=300] distance -200
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=300,r=400] distance -300
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=400,r=500] distance -400
+		
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		scoreboard players set @a[m=2,rm=500] distance -500
+
+>
+
 #--- CHECK FOR DEAHTS ---#
 <
 
@@ -369,7 +437,12 @@ strip_win:
 	# Reset all death counts
 	/scoreboard players reset @a deaths
 	
-	# Stop the power ups, call strip_cancel_powerups
-	/scoreboard players set @e[name=CityRunner] countdown 400
+	# Stop clock_distance 
+	/scoreboard players set @e[name=clock_distance] clocks 0
 	
+	# Put the total_wins scoreboard on display
+	/scoreboard objectives setdisplay sidebar total_wins
+	
+	# Stop the power ups, call strip_cancel_powerups
+	/scoreboard players set @e[name=strip_cancel_powerups] strips 1
 >

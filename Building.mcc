@@ -51,6 +51,8 @@
 # WINS & PROGRESS
 # Use this scoreboard to track how many times players have won (since last reset).
 /scoreboard objectives add total_wins dummy Total Wins
+# Use this scoreboard to track how close players are to the finish
+/scoreboard objectives add distance dummy Distance to Finish
 
 # POWER UPS
 # Use this to track powerups falling from the sky
