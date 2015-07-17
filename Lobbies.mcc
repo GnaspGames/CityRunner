@@ -95,7 +95,7 @@ clock_lobby_options:
 		execute @a[r=0] ~ ~ ~ 
 			tellraw @p ["",{"text":"Start a race now? "},{"text":"YES","color":"white","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
 	
-	# TEMPORARY
+	# creative mode temporary
 	/execute @e[name=cr_enter_city] ~ ~ ~ 
 		execute @a[r=0] ~ ~ ~ 
 			gamemode creative @p
@@ -104,9 +104,23 @@ clock_lobby_options:
 		execute @a[r=0] ~ ~ ~ 
 			tp @p 2043 65 2046
 	
-	
+
+	# CREDITS BOOK
+	/execute @e[name=cr_give_credits] ~ ~ ~ 
+		execute @a[r=0,score_hasCreditsBook=0] ~ ~ ~ 
+			give @p written_book 1 0 
+			{
+				pages:["[\"\",{\"text\":\"City Runner Credits\n\n\",\"underlined\":\"true\"},{\"text\":\"Thanks to:\n\n\",\"underlined\":\"false\"},{\"text\":\"badbuboboy\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.youtube.com/channel/UCbDCY76NR0caT9QZyDT3TeQ\"}},{\"text\":\"CalebRTM\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/CalebRTM\"}},{\"text\":\"JaffaNut\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/TheBowTieGamer\"}},{\"text\":\"Arcaniax\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/Arcaniax\"}},{\"text\":\"smartslime160204 \nbrettus_maximus \nlandrover3 \nollycar \nSmijjy \n\",\"color\":\"none\",\"underlined\":\"false\"},{\"text\":\"The Crit.Map guys!\n\",\"color\":\"none\"}]"],
+				title:"City Runner Credits",
+				author:Gnasp
+			}
 			
+	/execute @e[name=cr_give_credits] ~ ~ ~ 
+		scoreboard players set @a[r=0,score_hasCreditsBook=0] hasCreditsBook 1
 		
+	/execute @e[name=cr_give_credits] ~ ~ ~ 
+		scoreboard players set @a[rm=1] hasCreditsBook 0
+			
 >
 
 #--- RESET PLAYERS---#

@@ -73,6 +73,8 @@
 # LOBBY OPTIONS
 # hasIntroBook is used to stop player being given intro book too much
 /scoreboard objectives add hasIntroBook dummy HAS INTRO BOOK
+# hasCreditsBook same as above
+/scoreboard objectives add hasCreditsBook dummy HAS CREDITS BOOK
 # inGame
 /scoreboard objectives add inGame dummy IN GAME
 
