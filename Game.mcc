@@ -177,19 +177,19 @@ clock_powerups:
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:1,Amplifier:10,Duration:600}],display:{Name: "Speed Boost"}}}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=3,score_power_up_option_min=3] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:8,Amplifier:20,Duration:600}],display:{Name: "Jump Boost"}}}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=4,score_power_up_option_min=4] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:iron_sword,Count:1,tag:{display:{Name:"Blade Runner"}}}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=5,score_power_up_option_min=5] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:bow,Count:1},{Slot:14,id:arrow,Count:5}]}
 			
 	/execute @e[name=CityRunner,score_power_up_option=6,score_power_up_option_min=6] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~
+		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
 			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:deadbush,Count:1,tag:{display:{Name:"trolololol bush"}}}]}
 			
 	# Summon final fireworksSpark for landing: bigger to signify impact.	
@@ -243,7 +243,7 @@ strip_cancel_powerups:
 	# Disable counter. Set to -1 so that last run of clock_powerups doesn't trigger a new powerup.
 	/scoreboard players set @e[name=CityRunner] countdown -1
 	# Remove left over powerups
-	/execute @e[name=cr_powerup_position] ~ ~0.6 ~
+	/execute @e[name=cr_powerup_position] ~ ~0.6 ~ 
 		setblock ~ ~ ~ minecraft:air 0
 	# Remove cr_powerup_position
 	/kill @e[name=cr_powerup_position]
