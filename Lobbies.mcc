@@ -104,6 +104,10 @@ clock_lobby_options:
 		execute @a[r=0] ~ ~ ~ 
 			gamemode creative @p
 			
+	/execute @e[name=cr_enter_city] ~ ~ ~ 
+		execute @a[r=0] ~ ~ ~ 
+			scoreboard players enable @p trigger_start
+			
 	# Teleport point different to spawnpoint for better view
 	/execute @e[name=cr_enter_city] ~ ~ ~ 
 		execute @a[r=0] ~ ~ ~ 
