@@ -71,7 +71,12 @@
 /scoreboard objectives add testforOutput dummy TESTFOR OUTPUT
 
 # LOBBY OPTIONS
+# hasIntroBook is used to stop player being given intro book too much
 /scoreboard objectives add hasIntroBook dummy HAS INTRO BOOK
+# inGame
+/scoreboard objectives add inGame dummy IN GAME
+
+
 
 >
 

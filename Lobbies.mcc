@@ -47,12 +47,17 @@ clock_lobbies:
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		scoreboard players set @p total_wins 0
 		
+	# Set inGame to 0
+	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
+		scoreboard players set @p inGame 0
+		
 	# Give lobbyStatus 1 so that they don't go through this again.
 	/execute @a[score_lobbyStatus_min=0,score_lobbyStatus=0] ~ ~ ~ 
 		scoreboard players set @p lobbyStatus 1
 		
 clock_lobby_options:
 
+	# INTRODUCTION BOOK
 	/execute @e[name=cr_give_book] ~ ~ ~ 
 		execute @a[r=0,score_hasIntroBook=0] ~ ~ ~ 
 			give @p written_book 1 0 
@@ -61,15 +66,47 @@ clock_lobby_options:
 				[],
 				title:"City Runner Introduction",
 				author:Gnasp
-			} 
-			
-	/execute @e[name=cr_give_book] ~ ~ ~ execute @a[r=0,score_hasIntroBook=0] ~ ~ ~ say Welcome
+			}
 			
 	/execute @e[name=cr_give_book] ~ ~ ~ 
 		scoreboard players set @a[r=0,score_hasIntroBook=0] hasIntroBook 1
 		
 	/execute @e[name=cr_give_book] ~ ~ ~ 
 		scoreboard players set @a[rm=1] hasIntroBook 0
+		
+	# ENTER THE CITY
+	
+	/execute @e[name=cr_enter_city] ~ ~ ~ 
+		execute @a[r=0] ~ ~ ~ 
+			spawnpoint @p 2043 65 2046
+			
+	/execute @e[name=cr_enter_city] ~ ~ ~ 
+		execute @a[r=0] ~ ~ ~ 
+			scoreboard players set @p inGame 1
+	
+	/execute @e[name=cr_enter_city] ~ ~ ~ 
+		execute @a[r=0] ~ ~ ~ 
+			title @p title ["",{"text":"Welcome to Carrera City!"}]
+			
+	/execute @e[name=cr_enter_city] ~ ~ ~ 
+		execute @a[r=0] ~ ~ ~ 
+			title @p subtitle ["",{"text":"See the chat area for options"}]
+			
+	/execute @e[name=cr_enter_city] ~ ~ ~ 
+		execute @a[r=0] ~ ~ ~ 
+			tellraw @p ["",{"text":"Start a race now? "},{"text":"YES","color":"white","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
+	
+	# TEMPORARY
+	/execute @e[name=cr_enter_city] ~ ~ ~ 
+		execute @a[r=0] ~ ~ ~ 
+			gamemode creative @p
+			
+	/execute @e[name=cr_enter_city] ~ ~ ~ 
+		execute @a[r=0] ~ ~ ~ 
+			tp @p 2043 65 2046
+	
+	
+			
 		
 >
 
