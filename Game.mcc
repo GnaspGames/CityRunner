@@ -73,11 +73,16 @@ clock_countdown:	/
 strip_start:
 	# Choose a new Start Point
 	/scoreboard players set @r[type=ArmorStand,name=cr_start_point] start_points 1
+	
 	# Set up all viable spawn points around start point
-	/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ scoreboard players set @e[name=cr_start_spawn,r=10] start_points 1
+	/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ 
+		scoreboard players set @e[name=cr_start_spawn,r=10] start_points 1
+	
 	# Send players to a random spawn point.
-	/execute @a ~ ~ ~ tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
-	/execute @a ~ ~ ~ spawnpoint ~ ~ ~
+	/execute @a ~ ~ ~ 
+		tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
+	/execute @a ~ ~ ~ 
+		spawnpoint ~ ~ ~
 			
 	# Clear all inventories
 	/clear @a
@@ -94,7 +99,12 @@ strip_start:
 	/scoreboard players set @r[type=ArmorStand,name=cr_finish_point] finish_points 1
 
 	# Set the beacon block to turn it on
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ setblock ~ ~ ~ minecraft:beacon
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		setblock ~ ~ ~ minecraft:beacon
+		
+	# Announce the area name
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+		tellraw @a ["",{"text":"The finishing beacon is near: ","color":"green","bold":"true"},{"selector":"@p[type=ArmorStand,score_area_names_min=1]","color":"green","bold":"true"}]
 	
 	# Turn on fill clock for win conditions
 	/scoreboard players set @e[name=clock_winner] clocks 1

@@ -11,6 +11,12 @@
 # Place where the beacon should go. Beacon will be removed and placed to turn on and off.
 /summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_finish_point"}
 
+# AREA NAMES
+# Use these ArmorStands to give areas a name, so that the game can announce names to be helpful
+/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomNameVisible:true,CustomName:"ENTER AREA NAME"}
+# Then run this to register as an Area Name.
+/scoreboard players set @e[type=ArmorStand,r=0] area_names 1
+
 # SHOW START POINTS
 /entitydata @e[name=cr_start_point] {Invisible:false}
 # HIDE START POINTS
@@ -43,10 +49,12 @@
 
 # START & FINISH POINTS
 # Use these scoreboards to keep track of which stands are the current starting and finishing point. 
- 
-# Create the scoreboards
 /scoreboard objectives add start_points dummy START POINTS
 /scoreboard objectives add finish_points dummy FINISH POINTS
+
+# AREAS
+# Use this scoreboard to keep track of Marker ArmorStands that are used for AREA NAMES
+/scoreboard objectives add area_names dummy AREA NAMES
  
 # WINS & PROGRESS
 # Use this scoreboard to track how many times players have won (since last reset).
@@ -77,8 +85,6 @@
 /scoreboard objectives add hasCreditsBook dummy HAS CREDITS BOOK
 # inGame
 /scoreboard objectives add inGame dummy IN GAME
-
-
 
 >
 
