@@ -104,7 +104,7 @@ strip_start:
 		
 	# Announce the area name
 	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		tellraw @a ["",{"text":"The finishing beacon is near: ","color":"green","bold":"true"},{"selector":"@p[type=ArmorStand,score_area_names_min=1]","color":"green","bold":"true"}]
+		tellraw @a [{text:"The finishing beacon is near: ",color:green,bold:true},{selector:"@e[type=ArmorStand,c=1,score_area_names_min=1]"}]
 	
 	# Turn on fill clock for win conditions
 	/scoreboard players set @e[name=clock_winner] clocks 1
