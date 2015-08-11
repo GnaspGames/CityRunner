@@ -456,3 +456,16 @@ strip_win:
 	# Stop the power ups, call strip_cancel_powerups
 	/scoreboard players set @e[name=strip_cancel_powerups] strips 1
 >
+
+#--- Housekeeping ---#
+<
+
+# Use this clock to clean thigs up while the map is running. E.g. get rid of Iron Golems, keep Villagers silent. 
+clock_housekeeping:
+	# Remove Iron Golems that spawn because of villagers
+	/tp @e[type=VillagerGolem] 0 10 0
+	# Keep villagers quiet
+	/entitydata @e[type=Villager] {Silent:1}
+
+
+>
