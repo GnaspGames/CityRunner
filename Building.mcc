@@ -6,10 +6,39 @@
 # Create ArmorStands to mark all the potential spawn locations near start point (there can be as many or as few as you want).
 /summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_start_spawn"}
 
+
 # FINISH
 # Create ArmorStands to mark the location of all potential finish points.
 # Place where the beacon should go. Beacon will be removed and placed to turn on and off.
 /summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_finish_point"}
+
+
+# CLOCK / STRIP MARKERS
+# Create ArmorStands to use as execute clocks/strips
+# Clock/Strip will go in the positive z direction of the marker for 14 blocks.
+# Put commands into command block, 1 block below the clock point.
+
+# CLOCK:
+# 1. Summon
+/summon ArmorStand ~ ~1 ~ {NoGravity:true,Marker:true,Invisible:true,CustomNameVisible:true,CustomName:"clock_ENTERNAME"}
+# 2. Add to scoreboard
+/scoreboard players set @e[name=clock_ENTERNAME] clocks 1
+
+# STRIP:
+# 1. Summon
+/summon ArmorStand ~ ~1 ~ {NoGravity:true,Marker:true,Invisible:true,CustomNameVisible:true,CustomName:"strip_ENTERNAME"}
+# 2. Add to scoreboard
+/scoreboard players set @e[name=strip_ENTERNAME] strips 1
+
+clock_show_starts:
+	/execute @e[name=cr_start_point] ~ ~ ~ 
+		particle fireworksSpark ~ ~2 ~ 1 1 1 0.1 20 force
+		
+		
+clock_show_finishes:
+	/execute @e[name=cr_finish_point] ~ ~ ~ 
+		particle fireworksSpark ~ ~2 ~ 1 1 1 0.1 20 force
+
 
 # AREA NAMES
 # Use these ArmorStands to give areas a name, so that the game can announce names to be helpful
