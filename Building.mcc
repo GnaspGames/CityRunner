@@ -115,6 +115,10 @@ clock_show_finishes:
 # inGame
 /scoreboard objectives add inGame dummy IN GAME
 
+# VILLAGER NEEDS A HEAD
+# Used to flag villager without a player head and then give them one.
+/scoreboard objectives add villagerNoHead dummy VILLAGER NEEDS A HEAD
+
 >
 
 
