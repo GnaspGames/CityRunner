@@ -1,0 +1,13 @@
+Start Box:
+
+/give @p skull 1 3 {display:{Name:"Start Box"},SkullOwner:{Id:"689dd8ed-5c5f-4ece-8737-555c70f6c2eb",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmRkZmI0ZTQ3ZDI3YmFkZGQzZDI5MzZlZDdlOTEwN2Y1ZjM3YTFjODdiNjQ4ODE0YTJmNmRmNmI0ZDE1YzFhIn19fQ=="}]}}}
+
+Spawn Box:
+
+/give @p skull 1 3 {display:{Name:"Spawn Box"},SkullOwner:{Id:"b2a1d690-c51d-4c5e-b5e3-4dde31e37c7a",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTc0YWJmZmQyZjkwYTU5OTU4ZjJiZTI5YmM5YmY1NTllN2YzNzlmZTU1YThjZDE4ZWFlNWQ5MGE4MjZhYzQxIn19fQ=="}]}}}
+
+End Box:
+
+/give @p skull 1 3 {display:{Name:"End Box"},SkullOwner:{Id:"0ab959fb-40bf-41c2-bf83-8e1e8212f7a4",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTg5ODEwNjg0YjRmZDlhZjFjY2YyZjNjYzZlZjlmNDdjZDExNmRmYTdlZWQzOTliNjlmN2Y3ZjI2ODdhY2MifX19"}]}}}
+
+
