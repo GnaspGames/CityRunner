@@ -46,11 +46,14 @@ Then run this to register as an Area Name.
 ### OTHERS
 
 SHOW START POINTS: `/entitydata @e[name=cr_start_point] {Invisible:false}`
+
 HIDE START POINTS: `/entitydata @e[name=cr_start_point] {Invisible:true}`
 
 SHOW SPAWN POINTS: `/entitydata @e[name=cr_start_spawn] {Invisible:false}`
+
 HIDE SPAWN POINTS: `/entitydata @e[name=cr_start_spawn] {Invisible:true}`
 
 SHOW FINISH POINTS: `/entitydata @e[name=cr_finish_point] {Invisible:false}`
+
 HIDE FINISH POINTS: `/entitydata @e[name=cr_finish_point] {Invisible:true}`
 
