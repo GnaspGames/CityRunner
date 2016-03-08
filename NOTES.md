@@ -18,6 +18,7 @@ OR
 Create ArmorStands to mark all the potential spawn locations near start point (there can be as many or as few as you want).
 
 `/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_start_spawn"}`
+
 `/give @p minecraft:armor_stand ~ ~ ~ {EntityTag:{CustomName:"cr_start_spawn",Marker:1b,Invulnerable:1b,NoGravity:1b,Invisible:1b}}`
 
 To start/stop showing all existing start points:
@@ -32,6 +33,7 @@ Create ArmorStands to mark the location of all potential finish points.
 Place where the beacon should go. Beacon will be removed and placed to turn on and off.
 
 `/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_finish_point"}`
+
 `/give @p minecraft:armor_stand ~ ~ ~ {EntityTag:{CustomName:"cr_finish_point",Marker:1b,Invulnerable:1b,NoGravity:1b,Invisible:1b}}`
 
 ### AREA NAMES
