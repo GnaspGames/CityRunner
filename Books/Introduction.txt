@@ -1,0 +1,21 @@
+/give @p written_book 1 0 
+{
+	pages:[
+		"[\"\",
+			{\"text\":\"City Runner\nIntroduction Book\",\"underlined\":\"true\"},
+			{\"text\":\"\n(Beta)\",\"underlined\":\"false\"},
+			{\"text\":\"\n\nREADME on Github\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://github.com/GnaspGames/CityRunner/blob/master/README.md\"}},
+			{\"text\":\"\n\nWelcome. This game is currently in beta. Please read the README on github first, and be prepared for bugs. P.T.O.\",\"color\":\"none\",\"underlined\":\"false\"}
+		]",
+		"[\"\",
+			{\"text\":\"Please give all feedback to Gnasp:\"},
+			{\"text\":\"\n\nOpen Github Issue\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://github.com/GnaspGames/CityRunner/issues/new\"}},
+			{\"text\":\"\n\nTwitter: @GnaspGames\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/GnaspGames\"}},
+			{\"text\":\"\n\nSkype Group Chat\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://join.skype.com/er1St99\"}},
+			{\"text\":\"\n\nReddit: Gnasp\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.reddit.com/user/gnasp\"}},
+			{\"text\":\"\n\nThank you!\",\"color\":\"none\",\"underlined\":\"false\"}
+		]"
+	],
+	title:"City Runner Introduction",
+	author:Gnasp
+}

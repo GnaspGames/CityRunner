@@ -23,8 +23,9 @@ Create ArmorStands to mark all the potential spawn locations near start point (t
 
 To start/stop showing all existing start points:
 
-`/scoreboard players tag @e[name=CityRunner] add showStartPoints`
-`/scoreboard players tag @e[name=CityRunner] remove showStartPoints`
+`/scoreboard players tag @e[name=SYSTEM] add loop_ShowStartPoints`
+
+`/scoreboard players tag @e[name=SYSTEM] remove loop_ShowStartPoints`
 
 ### FINISH POINTS
 
@@ -35,6 +36,12 @@ Place where the beacon should go. Beacon will be removed and placed to turn on a
 `/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_finish_point"}`
 
 `/give @p minecraft:armor_stand ~ ~ ~ {EntityTag:{CustomName:"cr_finish_point",Marker:1b,Invulnerable:1b,NoGravity:1b,Invisible:1b}}`
+
+To start/stop showing all existing finish points:
+
+`/scoreboard players tag @e[name=SYSTEM] add loop_ShowFinishPoints`
+
+`/scoreboard players tag @e[name=SYSTEM] remove loop_ShowFinishPoints`
 
 ### AREA NAMES
 Use these ArmorStands to give areas a name, so that the game can announce names to be helpful
@@ -58,4 +65,23 @@ HIDE SPAWN POINTS: `/entitydata @e[name=cr_start_spawn] {Invisible:true}`
 SHOW FINISH POINTS: `/entitydata @e[name=cr_finish_point] {Invisible:false}`
 
 HIDE FINISH POINTS: `/entitydata @e[name=cr_finish_point] {Invisible:true}`
+
+Scoreboards to replace
+----------------------
+
+Scoreboards that need replacing with tags because they are being used to tag entities
+
+### AREAS
+
+We're using this scoreboard to keep track of Marker ArmorStands that are used for AREA NAMES
+
+`/scoreboard objectives add area_names dummy AREA NAMES`
+
+### VILLAGER NEEDS A HEAD
+
+Used to flag villager without a player head and then give them one.
+
+`/scoreboard objectives add villagerNoHead dummy VILLAGER NEEDS A HEAD`
+
+
 

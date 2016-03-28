@@ -1,504 +1,200 @@
-#--- TRIGGER START ---#
-<
-# Allow players to trigger the start of a game
+--###########--
+--   GAME    --
+--###########--
 
-clock_trigger_start:
-	/execute @a[score_trigger_start_min=1] ~ ~ ~ 
-		scoreboard players set @e[name=strip_start_countdown] strips 1
-	/execute @a[score_trigger_start_min=1] ~ ~ ~ 
-		scoreboard players set @e[score_trigger_start_min=1] trigger_start 0
->
+-- The main game code
 
-#--- START COUNTDOWN ---#
-<
-# Start a countdown that leads to the game start
+# TRIGGER START
+!loop TriggerStart
+	{"type":"chain", "auto":true, "conditional":false}
+	{"executeAs":"@a[score_trigger_start_min=1]"}
+		!run_function StartCountdown
+		-- Stop players using trigger_start
+		!exit_loop TriggerStart
+		/scoreboard players reset @a trigger_start
+	{"executeAs":""}
 
-# To start, use: 
-/scoreboard players set @e[name=strip_start_countdown] strips 1
-
-strip_start_countdown:
-	# Set correct title times
+# START COUNTDOWN
+-- Start a countdown that leads to the game start
+!function StartCountdown
+	{"type":"chain", "auto":true, "conditional":false}
+	-- Set correct title times
 	/title @a times 0 40 20 
-	# Start countdown scoreboard
-	/scoreboard players set @e[type=ArmorStand,name=CityRunner] countdown 100
-	# Turn on countdown clock
-	/scoreboard players set @e[name=clock_countdown] clocks 1
-	# Stop players using trigger_start
-	/scoreboard players reset @a trigger_start
-	/scoreboard players set @e[name=clock_trigger_start] clocks 0
+	-- Start countdown scoreboard
+	/scoreboard players set @e[type=ArmorStand,name=SYSTEM] countdown 100
+	-- Turn on countdown loop
+	!run_loop Countdown
 
-clock_countdown:	/
-
-	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=100,score_countdown_min=100] ~ ~ ~ 
-		execute @a ~ ~ ~ 
-			title @p title {text:"5",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
-			
-	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=80,score_countdown_min=80] ~ ~ ~ 
-		execute @a ~ ~ ~ 
-			title @p title {text:"4",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
-			
-	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=60,score_countdown_min=60] ~ ~ ~ 
-		execute @a ~ ~ ~ 
-			title @p title {text:"3",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
-			
-	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=40,score_countdown_min=40] ~ ~ ~ 
-		execute @a ~ ~ ~ 
-			title @p title {text:"2",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
-			
-	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=20,score_countdown_min=20] ~ ~ ~ 
-		execute @a ~ ~ ~ 
-			title @p title {text:"1",color:red,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
-			
-	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=0,score_countdown_min=0] ~ ~ ~ 
-		execute @a ~ ~ ~ 
-			title @p title {text:"Go!",color:green,bold:false,underlined:false,italic:false,strikethrough:false,obfuscated:false}
+# COUNTDOWN
+!loop Countdown
+	{"type":"chain", "auto":true, "conditional":false}
+	{"executeAs":"@e[name=SYSTEM,score_countdown=100,score_countdown_min=100]"}
+		/title @a reset
+		/title @a title {"text":"5","color":"red","bold":"true"}
 		
-	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=0,score_countdown_min=0] ~ ~ ~ 
-		scoreboard players set @e[name=clock_countdown] clocks 0
+	{"executeAs":"@e[name=SYSTEM,score_countdown=80,score_countdown_min=80]"}	
+		/title @a title {"text":"4","color":"red","bold":"true"}
 		
-	/execute @e[type=ArmorStand,name=CityRunner,score_countdown=0,score_countdown_min=0] ~ ~ ~ 
-		scoreboard players set @e[name=strip_start] strips 1
-			
-	/scoreboard players remove @e[type=ArmorStand,name=CityRunner] countdown 1
+	{"executeAs":"@e[name=SYSTEM,score_countdown=60,score_countdown_min=60]"}
+		/title @a title {"text":"3","color":"red","bold":"true"}
+		
+	{"executeAs":"@e[name=SYSTEM,score_countdown=40,score_countdown_min=40]"}
+		/title @a title {"text":"2","color":"red","bold":"true"}
+		
+	{"executeAs":"@e[name=SYSTEM,score_countdown=20,score_countdown_min=20]"}
+		/title @a title {"text":"1","color":"red","bold":"true"}
+		
+	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
+		/title @a title {"text":"Go!","color":"green","bold":"true"}
+		!exit_loop Countdown
+			{"conditional":true}
+				!run_function StartGame
+	{"executeAs":"", "conditional":false}
+	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
 
->
-
-
-#--- START GAME ---#
-<
-
-# To start a new game:
-/scoreboard players set @e[name=strip_start] strips 1
-
-strip_start:
-	# Choose a new Start Point
+# START GAME
+!function StartGame
+	{"type":"chain", "conditional":false}
+	-- Choose a new Start Point
 	/scoreboard players set @r[type=ArmorStand,name=cr_start_point] start_points 1
-	
-	# Set up all viable spawn points around start point
-	/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ 
-		scoreboard players set @e[name=cr_start_spawn,r=10] start_points 1
-	
-	# Send players to a random spawn point.
-	/execute @a ~ ~ ~ 
-		tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
-	/execute @a ~ ~ ~ 
-		spawnpoint ~ ~ ~
-			
-	# Clear all inventories
-	/clear @a
-			
-	# Reset start point scores
+	-- Set up all viable spawn points around start point
+	/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ scoreboard players set @e[name=cr_start_spawn,r=10] start_points 1
+	-- Send players to a random spawn point.
+	/execute @a ~ ~ ~ tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
+	/execute @a ~ ~ ~ spawnpoint ~ ~ ~	
+	-- Clear all inventories
+	/clear @a	
+	-- Reset start point scores
 	/scoreboard players set @e[type=ArmorStand,name=cr_start_point] start_points 0
 	/scoreboard players set @e[type=ArmorStand,name=cr_start_spawn] start_points 0
-	
-	# Give players starting effects
+	-- Give players starting effects
 	/effect @a minecraft:speed 1000 3 true
 	/give @a minecraft:ender_pearl 5
-	
-	# Choose a new Finish Point
+	-- Choose a new Finish Point
 	/scoreboard players set @r[type=ArmorStand,name=cr_finish_point] finish_points 1
-
-	# Set the beacon block to turn it on
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
+	-- Set the beacon block to turn it on
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ \
 		setblock ~ ~ ~ minecraft:beacon
-		
-	# Announce the area name
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		tellraw @a [{text:"The finishing beacon is near: ",color:green,bold:true},{selector:"@e[type=ArmorStand,c=1,score_area_names_min=1]"}]
-	
-	# Turn on fill clock for win conditions
-	/scoreboard players set @e[name=clock_winner] clocks 1
-	
-	# Put all players into adventure mode
+	-- Announce the area name
+	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ \
+		tellraw @a [{"text":"The finishing beacon is near: ","color":"green","bold":"true"},{"selector":"@e[type=ArmorStand,c=1,score_area_names_min=1]"}]
+	-- Turn on loop for win conditions
+	!run_loop DetectWin
+	-- Put all players into adventure mode
 	/gamemode adventure @a
-	
-	# Reset DEATHS for all players
+	-- Reset DEATHS for all players
 	/scoreboard players reset @a deaths
 	/scoreboard players set @a deaths_dummy 0
-	
-	# Start clock_deaths
-	/scoreboard players set @e[name=clock_deaths] clocks 1
-	
-	# Start strip_start_powerups
-	/scoreboard players set @e[name=strip_start_powerups] strips 1
-	
-	# Give everyone full health
+	-- Start detecting deaths
+	!run_loop DetectDeaths
+	-- Start powerups
+	!run_function StartPowerups
+	-- Give everyone full health
 	/effect @a minecraft:regeneration 1 20
-	
-	# Put the "Distance" scoreboard on display
+	-- Display "Distance" scoreboard and start loop
 	/scoreboard objectives setdisplay sidebar distance
-	
-	# Turn on clock_distance
-	/scoreboard players set @e[name=clock_distance] clocks 1
->
+	!run_loop CalcDistance
 
-#--- POWER UPS ---#
-<
+# DISTANCE CALC
+!loop CalcDistance
+	{"type":"chain", "conditional":false}
+	{"executeAs":"@e[name=cr_finish_point,score_finish_points_min=1]"}
+		/scoreboard players set @a[m=2,rm=1,r=2] distance -1
+		/scoreboard players set @a[m=2,rm=2,r=3] distance -2
+		/scoreboard players set @a[m=2,rm=3,r=4] distance -3
+		/scoreboard players set @a[m=2,rm=4,r=5] distance -4
+		/scoreboard players set @a[m=2,rm=5,r=10] distance -5
+		/scoreboard players set @a[m=2,rm=10,r=15] distance -10
+		/scoreboard players set @a[m=2,rm=15,r=20] distance -15
+		/scoreboard players set @a[m=2,rm=20,r=25] distance -20
+		/scoreboard players set @a[m=2,rm=25,r=30] distance -25
+		/scoreboard players set @a[m=2,rm=30,r=40] distance -30
+		/scoreboard players set @a[m=2,rm=40,r=50] distance -40
+		/scoreboard players set @a[m=2,rm=50,r=100] distance -50
+		/scoreboard players set @a[m=2,rm=100,r=150] distance -100
+		/scoreboard players set @a[m=2,rm=150,r=200] distance -150
+		/scoreboard players set @a[m=2,rm=200,r=300] distance -200
+		/scoreboard players set @a[m=2,rm=300,r=400] distance -300
+		/scoreboard players set @a[m=2,rm=400,r=500] distance -400
+		/scoreboard players set @a[m=2,rm=500] distance -500
+	{"executeAs":""}
 
-# TODO: Make chest content random
-# TODO: Remove power ups at the end of the race
-# TODO: Consider making the countdown length random, or different
-
-random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 1
-random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 2
-random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 3
-random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 4
-random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 5
-random_powerup_score: /scoreboard players set @e[name=CityRunner] power_up_option 6
-
-strip_start_powerups:
-	/scoreboard players set @e[name=strip_cycle_powerups] strips 1
-	/scoreboard players set @e[name=clock_powerups] clocks 1
-	
-strip_cycle_powerups:
-	/scoreboard players set @e[name=CityRunner] countdown 600
-	
-	/execute @e[type=ArmorStand,name=random_powerup_score] ~ ~ ~ 
-		setblock ~ ~-1 ~ wool 15
-		
-	/execute @r[type=ArmorStand,name=random_powerup_score] ~ ~ ~ 
-		setblock ~ ~-1 ~ redstone_block 0
-	
-
-clock_powerups:
-	# Check countdown to trigger new power up creation
-	/execute @e[name=CityRunner,score_countdown=0,score_countdown_min=0] ~ ~ ~ 
-		/scoreboard players set @e[name=strip_give_powerups] strips 1
-		
-	# Countdown each tick
-	/scoreboard players remove @e[name=CityRunner] countdown 1
-	
-	# Now, track cr_falling_powerup (created by strip_give_powerups) until it hits the ground, then create a chest.
-	/scoreboard players set @e[name=cr_falling_powerup] power_ups 1
-	
-	/scoreboard players set @e[name=cr_falling_powerup] power_ups 0 {OnGround:1b} 
-	
-	# If score is 1, it's still in the air, show fireworks spark
-	/execute @e[name=cr_falling_powerup,score_power_ups=1] ~ ~ ~ 
-		particle fireworksSpark ~ ~2 ~ 0.2 0 0.2 0.1 100 force
-	
-	# If score is 0, it's now on the ground. Summon a chest and so on.
-	/execute @e[name=CityRunner,score_power_up_option=1,score_power_up_option_min=1] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
-			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:ender_pearl,Count:3}]}
-			
-	/execute @e[name=CityRunner,score_power_up_option=2,score_power_up_option_min=2] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
-			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:1,Amplifier:10,Duration:600}],display:{Name: "Speed Boost"}}}]}
-			
-	/execute @e[name=CityRunner,score_power_up_option=3,score_power_up_option_min=3] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
-			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:8,Amplifier:20,Duration:600}],display:{Name: "Jump Boost"}}}]}
-			
-	/execute @e[name=CityRunner,score_power_up_option=4,score_power_up_option_min=4] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
-			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:iron_sword,Count:1,tag:{display:{Name:"Blade Runner"}}}]}
-			
-	/execute @e[name=CityRunner,score_power_up_option=5,score_power_up_option_min=5] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
-			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:bow,Count:1},{Slot:14,id:arrow,Count:5}]}
-			
-	/execute @e[name=CityRunner,score_power_up_option=6,score_power_up_option_min=6] ~ ~ ~ 
-		execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ 
-			setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:deadbush,Count:1,tag:{display:{Name:"trolololol bush"}}}]}
-			
-	# Summon final fireworksSpark for landing: bigger to signify impact.	
-	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
-		particle fireworksSpark ~ ~2 ~ 1 1 1 0.1 200 force
-		
-	# Play sound to replace fireworks sound
-	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ 
-		playsound random.explode @a ~ ~ ~ 1 1 1
-			
-	# Replace cr_falling_powerup with cr_powerup_position
-	/entitydata @e[name=cr_falling_powerup,score_power_ups=0] {CustomName:"cr_powerup_position"}
-
-strip_give_powerups:
-	
-	# Start by summoning markers to east/north/west/south of each player
-	# EAST FACING
-	/execute @a[m=2,rym=-135,ry=-45] ~ ~ ~ 
-		summon ArmorStand ~10 ~ ~ {CustomName:"cr_powerup",Marker:true,Invisible:true}
-		
-	# NORTH FACING
-	/execute @a[m=2,rym=135,ry=-135]~ ~ ~ 
-		summon ArmorStand ~ ~ ~-10 {CustomName:"cr_powerup",Marker:true,Invisible:true}
-	
-	# WEST FACING
-	/execute @a[m=2,rym=46,ry=135] ~ ~ ~ 
-		summon ArmorStand ~-10 ~ ~ {CustomName:"cr_powerup",Marker:true,Invisible:true}
-	
-	# SOUTH FACING
-	/execute @a[m=2,rym=-45,ry=45] ~ ~ ~ 
-		summon ArmorStand ~ ~ ~10 {CustomName:"cr_powerup",Marker:true,Invisible:true}
-		
-	# Then summon Invisible ArmorStand above each marker - clock_powerups catches this.
-	/execute @e[name=cr_powerup] ~ ~ ~ 
-		summon ArmorStand ~ ~100 ~ {CustomName:"cr_falling_powerup",Invisible:true,Marker:true}
-		
-	# Kill all markers
-	/kill @e[name=cr_powerup]
-		
-	# Run strip_start_powerups again.
-	/scoreboard players set @e[name=strip_cycle_powerups] strips 1
-	
-	# Play a thunder sound
-	/playsound ambient.weather.thunder @a ~ ~ ~ 0.2 1 0.2
-	
-strip_cancel_powerups:
-	# Turn off clock and reset countdown
-	/scoreboard players set @e[name=clock_powerups] clocks 0
-	# Kill any power ups that are falling
-	/kill @e[name=cr_falling_powerup]
-	# Disable counter. Set to -1 so that last run of clock_powerups doesn't trigger a new powerup.
-	/scoreboard players set @e[name=CityRunner] countdown -1
-	# Remove left over powerups
-	/execute @e[name=cr_powerup_position] ~ ~0.6 ~ 
-		setblock ~ ~ ~ minecraft:air 0
-	# Remove cr_powerup_position
-	/kill @e[name=cr_powerup_position]
-	
->
-
-
-#--- DISTANCE FROM FINISH ---#
-<
-
-clock_distance:
-
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=1,r=2] distance -1
-
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=2,r=3] distance -2
-
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=3,r=4] distance -3
-
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=4,r=5] distance -4
-
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=5,r=10] distance -5
-
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=10,r=15] distance -10
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=15,r=20] distance -15
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~  
-		scoreboard players set @a[m=2,rm=20,r=25] distance -20
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~  
-		scoreboard players set @a[m=2,rm=25,r=30] distance -25
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=30,r=40] distance -30
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=40,r=50] distance -40
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=50,r=100] distance -50
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=100,r=150] distance -100
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=150,r=200] distance -150
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=200,r=300] distance -200
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=300,r=400] distance -300
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=400,r=500] distance -400
-		
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ 
-		scoreboard players set @a[m=2,rm=500] distance -500
-
->
-
-#--- CHECK FOR DEAHTS ---#
-<
-
-clock_deaths:
-	# Tell dead players that they are out of the race
-	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
-		tellraw @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ["",{"text":"You're out of the race!\n","color":"yellow","bold":"true"},{"text":"You can now spectate until the race is complete. ","color":"none","bold":"false"}]
-		
-	# Tell dead players that they are out of the race
-	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
-		execute @p ~ ~ ~ 
-			tellraw @a ["",{"selector":"@p","color":"yellow","bold":"true"},{"text":" is out of the race!","color":"yellow","bold":"true"}]
-			
-	# Update deaths_dummy to match deaths
-	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
-		scoreboard players set @p deaths_dummy 1
-
-	# Change adventure mode players to spectator when they have 1 death.
-	/execute @a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1] ~ ~ ~ 
-		gamemode spectator @p
-		
-	#--- Test for no more players ---#
-	
-	# Reset testforOutput
-	/scoreboard players set @e[name=CityRunner] testforOutput -1
-	
-	/stats block ~ ~2 ~ set SuccessCount @e[name=CityRunner] testforOutput
+# DETECT DEATHS
+!loop DetectDeaths
+	{"type":"chain", "conditional":false}
+	{"executeAs":"@a[m=2,score_deaths_min=1,score_timeSinceDeath_min=1]"}
+		-- Tell dead players that they are out of the race
+			/tellraw @p ["",{"text":"You're out of the race!\n","color":"yellow","bold":"true"},{"text":"You can now spectate until the race is complete. ","color":"none","bold":"false"}]
+		-- Tell dead players that they are out of the race
+			/tellraw @a ["",{"selector":"@p","color":"yellow","bold":"true"},{"text":" is out of the race!","color":"yellow","bold":"true"}]
+		-- Update deaths_dummy to match deaths
+			/scoreboard players set @p deaths_dummy 1
+		-- Change adventure mode players to spectator when they have 1 death.
+			/gamemode spectator @p
+	{"executeAs":""}
+	--- Test for no more players ---
+	-- Reset testforOutput
+	/scoreboard players set @e[name=SYSTEM] testforOutput -1
+	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
 	/testfor @a[score_deaths_dummy_min=0,score_deaths_dummy=0]
-	
-	# Stop self
-	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
-		scoreboard players set @e[name=clock_deaths] clocks 0
-	
-	# Tell everyone the game is over
-	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
-		tellraw @a ["",{"text":"Race over!\n","color":"yellow","bold":"true"},{"text":"There's nobody left alive to win...","color":"none","bold":"false"}]
-		
-	# Turn clock_winner off
-	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
-		scoreboard players set @e[name=clock_winner] clocks 0
-		
-	# Run strip_win
-	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
-		scoreboard players set @e[name=strip_win] strips 1
-		
-	# Turn off finish point
-	/execute @e[name=CityRunner,score_testforOutput=0,score_testforOutput_min=0] ~ ~ ~ 
-		scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
-		
-	# Reset testforOutput
-	/scoreboard players set @e[name=CityRunner] testforOutput -1
->
+	{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0]"}
+		-- Stop self
+		!exit_loop DetectDeaths
+		-- Tell everyone the game is over
+		/tellraw @a ["",{"text":"Race over!\n","color":"yellow","bold":"true"},{"text":"There's nobody left alive to win...","color":"none","bold":"false"}]
+		-- Turn DetectWin off
+		!exit_loop DetectWin
+		-- Run EndGame
+		!run_function EndGame
+		-- Turn off finish point
+		/scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
+	{"executeAs":""}	
+	 -- Reset testforOutput
+	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 
-#--- CHECK FOR WINNER ---#
-<
-
-clock_winner:
-	# Execute on anyone who gets to be directly above the finish point.
-		
-	# Turn self off
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
-		scoreboard players set @e[name=clock_winner] clocks 0
-		
-	# Run strip_win
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
-		scoreboard players set @e[name=strip_win] strips 1
-		
-	# Announce winner
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
+# DETECT WINNER
+!loop DetectWin
+	{"type":"chain", "conditional":false}
+	-- Execute on anyone who gets to be directly above the finish point.
+	{"executeAs":"@e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200]"}
+		-- Turn self off
+		!exit_loop DetectWin
+		-- Run EndGame
+		!run_function EndGame
+		-- Announce winner
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" wins the race! ","color":"green","bold":"true"}]
-		
-	# Add 1 to the winners Total Wins
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
-		scoreboard players add @p total_wins 1
-		
-	# Create Fireworks
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
-		summon FireworksRocketEntity ~ ~10 ~ 
-		{
-			LifeTime:20, FireworksItem:
-			{
-				id:401, Count:1, tag:
-				{
-					Fireworks:
-					{
-						Explosions:
-						[
-							{ Flicker:1, Trail:1, Type:1, Colors:[0], FadeColors:[0] },
-							{ Flicker:1, Trail:1, Type:2, Colors:[16777215], FadeColors:[16777215] },
-							{ Flicker:1, Trail:1, Type:4, Colors:[15000], FadeColors:[15000] }
-						]
-					}
-				}
-			}
-		}
-		
-	# Remove finish point.	
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200] ~ ~ ~ 
-		scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
+		-- Add 1 to the winners Total Wins
+		/scoreboard players add @p total_wins 1
+		-- Create Fireworks
+		/summon FireworksRocketEntity ~ ~10 ~ { LifeTime:20, FireworksItem:{ id:401, Count:1, tag:{ Fireworks:{ Explosions:[{ Flicker:1, Trail:1, Type:1, Colors:[0], FadeColors:[0] },{ Flicker:1, Trail:1, Type:2, Colors:[16777215], FadeColors:[16777215] },{ Flicker:1, Trail:1, Type:4, Colors:[15000], FadeColors:[15000] }]}}}}
+		-- Remove finish point.	
+		/scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
+	{"executeAs":""}
 			
-strip_win:
-
-	# Turn off all finish point beacons (should only be 1 really)
+# END GAME
+!function EndGame
+	{"type":"chain", "conditional":false}
+	-- Turn off all finish point beacons (should only be 1 really)
 	/execute @e[name=cr_finish_point] ~ ~ ~ setblock ~ ~ ~ minecraft:air
-
-	# Allow all players to use trigger_start again
+	-- Allow all players to use trigger_start again and start loop
+	/scoreboard players set @a trigger_start 0
 	/scoreboard players enable @a trigger_start
-	/scoreboard players set @e[name=clock_trigger_start] clocks 1
-
-	# Show "Play Again" option	
+	!run_loop TriggerStart
+	-- Show "Play Again" option	
 	/tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"white","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
-
-	# Clear all inventories and effects
+	-- Clear all inventories and effects
 	/effect @a clear
 	/clear @a
-
-	# TEMPORARY: Put all players back to creative mode
+	-- TEMPORARY: Put all players back to creative mode
 	/gamemode creative @a
-	
-	# Stop clock_deaths
-	/scoreboard players set @e[name=clock_deaths] clocks 0
-	
-	# Reset all death counts
+	-- Stop DetectDeaths
+	!exit_loop DetectDeaths
+	-- Reset all death counts
 	/scoreboard players reset @a deaths
-	
-	# Stop clock_distance 
-	/scoreboard players set @e[name=clock_distance] clocks 0
-	
-	# Put the total_wins scoreboard on display
+	-- Stop CalcDistance 
+	!exit_loop CalcDistance
+	-- Put the total_wins scoreboard on display
 	/scoreboard objectives setdisplay sidebar total_wins
-	
-	# Stop the power ups, call strip_cancel_powerups
-	/scoreboard players set @e[name=strip_cancel_powerups] strips 1
->
+	-- Stop the power ups, call CancelPowerups
+	!run_function CancelPowerups
 
-#--- Housekeeping ---#
-<
-
-# Use this clock to clean thigs up while the map is running. E.g. get rid of Iron Golems, keep Villagers silent. 
-clock_housekeeping:
-	
-	# Remove Iron Golems that spawn because of villagers
-	/tp @e[type=VillagerGolem] 0 10 0
-	
-	# Keep villagers quiet
-	/entitydata @e[type=Villager] {Silent:1}
-	
-	
-	# Give villagers with no skull a score of 1
-	/scoreboard players set @e[type=Villager] villagerNoHead 1 
-	/scoreboard players set @e[type=Villager] villagerNoHead 0 {Equipment:[4:{id:minecraft:skull}]}
-	
-	/execute @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] ~ ~ ~ 
-		execute @e[type=ArmorStand,name=random_villagerhead] ~ ~ ~ 
-			setblock ~ ~-1 ~ wool 15
-	
-	/execute @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] ~ ~ ~ 
-		execute @r[type=ArmorStand,name=random_villagerhead] ~ ~ ~ 
-			setblock ~ ~-1 ~ redstone_block 0
-			
-	/scoreboard players reset @e[type=Villager] villagerNoHead
-
-	
-	
-# Villager heads
-random_villagerhead: 
-	# Men
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"f2bd3780-d093-4c86-ef83-bac8ccf95bc0",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ4MjNkOWExNWRhZDFiNzY3YTI2MDU0ZGQ0N2IxNGJiZWZlNWI3ZWUxOTk5YTMwNmMyODZmMThhNmZjOTU2MSJ9fX0="}]}}}				
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"99f2a0b5-f94d-c28a-5d25-5c0a72c3f419",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzU3YjgzYWE4M2JiY2FjNTQ3YzZhMjk3MzdiMzkxOWUyYjFkYWE1NGViY2QzNWJkYmY3NmYwYzEzZGU1MyJ9fX0="}]}}}
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"76e9adee-7ac2-addc-45fb-6ccca3f24521",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGJmNmRkMjM1MTlkYTc1MjVlZjJkNGIzNmZiZmM0MjBlYTRiY2I1NmYzYWU3OThmYjM2YTFlNWZhYjFiZTBhZiJ9fX0="}]}}}
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"2383b21c-1423-4007-9d00-5d8e94d4f67f",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmY3YTdlNjRkMTVmMzQzOTFlZDMzYTQzM2VkZWJmODY5NzY4MTRiZjM0YjNjYzJjNjMzOTIyYjFhNGFmNTYifX19"}]}}}
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"11adf43e-066a-a708-0872-b3713a3b9537",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzM0ZTQwOTA2MDRjY2U3YmM3NjZmOGEwNTQ3N2U3NjI3NGIxZGM1OGE3MGE2Mzg3OGM1NTUzNGEyMmU2MWIifX19"}]}}}
-	# Women
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"c52c903c-0e3f-2d72-c4f0-c8d06247c497",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWRhNWJkZDdhMzYxNzRmZGM2ZjhhYjNiZGU1OTUzNGUyMjZjZWYxY2U5MWZjNWM3NTQzZmJlZDNlYWI4MzdiIn19fQ=="}]}}}
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"bddee536-2fe5-8c36-ef90-b5bc7d28ce42",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTUzZTQ5Y2E5ODc3Yzk5NzU2NmVmNDA4ZWI2ZTY0YmI0YzY4NTg3MjY2OTkyNzllMzFhNjk0ZjdkZjZiZGIxIn19fQ=="}]}}}
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"d39b2e46-4c0a-f6e1-a3e4-98b5cf373448",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2Y0NTM4Mzk2MmNhNzFlMDFhNmZiNWY3ZWNiMzNkY2VmYWQwYWZiYzc1MTA4YmZmMzY4NmNjNjZlYjFjNjkifX19"}]}}}
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"cda81293-f758-08af-d098-6ffa13d3ed93",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTBiM2E1ZmM2MDI2ZTBmM2U5OTRhYWM2NTVjZmU5NjFiNWQ5NmFiNGU4NzQ1MWQ2OGNhNzM0NzU1ZDMxMyJ9fX0="}]}}}	
-	# Police Man
-	/replaceitem entity @e[type=Villager,score_villagerNoHead=1,score_villagerNoHead_min=1] slot.armor.head skull 1 3 {SkullOwner:{Id:"fe2ac5ee-5c55-4916-b007-38be0592e75c",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjcxNTdjZmZiMDYwNjNiMzUyZGM2ODQ3OGY0NzZlN2QyMDJjM2JhNmU3Y2JmMjk3MjQxYmU4MTY4MTA3NGJmIn19fQ=="}]}}}
->

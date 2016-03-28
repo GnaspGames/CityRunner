@@ -1,0 +1,105 @@
+-- #--- POWER UPS ---# --
+-- TODO: Make chest content random
+-- TODO: Remove power ups at the end of the race
+-- TODO: Consider making the countdown length random, or different
+
+# POWERUP OPTIONS
+{"type":"impulse", "auto":false, "conditional":false}
+{"markerTag":"randomPowerUp"}
+	/scoreboard players set @e[name=SYSTEM] power_up_option 1
+	/scoreboard players set @e[name=SYSTEM] power_up_option 2
+	/scoreboard players set @e[name=SYSTEM] power_up_option 3
+	/scoreboard players set @e[name=SYSTEM] power_up_option 4
+	/scoreboard players set @e[name=SYSTEM] power_up_option 5
+	/scoreboard players set @e[name=SYSTEM] power_up_option 6
+{"markerTag":""}
+
+# START POWERUPS
+!function StartPowerups
+	{"type":"chain", "auto":true, "conditional":false}
+	!run_function CyclePowerups
+	!run_loop Powerups
+	
+# CYCLE POWERUPS
+!function CyclePowerups
+	{"type":"chain", "conditional":false}
+	/scoreboard players set @e[name=SYSTEM] countdown 600
+	/execute @r[type=ArmorStand,tag=randomPowerUp] ~ ~ ~ blockdata ~ ~ ~ {auto:1b}
+	/execute @e[type=ArmorStand,tag=randomPowerUp] ~ ~ ~ blockdata ~ ~ ~ {auto:0b}
+
+# POWERUPS LOOP
+!loop Powerups
+	-- Check countdown to trigger new power up creation
+	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
+		!run_function GivePowerups
+	{"executeAs":""}
+	-- Countdown each tick
+	/scoreboard players remove @e[name=SYSTEM] countdown 1
+	-- Now, track cr_falling_powerup (created by GivePowerups) until it hits the ground, then create a chest.
+	/scoreboard players set @e[name=cr_falling_powerup] power_ups 1
+	/scoreboard players set @e[name=cr_falling_powerup] power_ups 0 {OnGround:1b} 
+	
+	-- If score is 1, it's still in the air, show fireworks spark
+	{"executeAs":"@e[name=cr_falling_powerup,score_power_ups=1]"}
+		/particle fireworksSpark ~ ~2 ~ 0.2 0 0.2 0.1 100 force
+		
+	-- If score is 0, it's now on the ground. Summon a chest and so on.
+	{"executeAs":"@e[name=SYSTEM,score_power_up_option=1,score_power_up_option_min=1]"}
+		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:ender_pearl,Count:3}]}
+	
+	{"executeAs":"@e[name=SYSTEM,score_power_up_option=2,score_power_up_option_min=2]"}
+		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:1,Amplifier:10,Duration:600}],display:{Name: "Speed Boost"}}}]}
+			
+	{"executeAs":"@e[name=SYSTEM,score_power_up_option=3,score_power_up_option_min=3]"}
+		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:potion,Count:1,Damage: 8203,tag:{CustomPotionEffects:[{Id:8,Amplifier:20,Duration:600}],display:{Name: "Jump Boost"}}}]}
+			
+	{"executeAs":"@e[name=SYSTEM,score_power_up_option=4,score_power_up_option_min=4]"}
+		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:iron_sword,Count:1,tag:{display:{Name:"Blade Runner"}}}]}
+			
+	{"executeAs":"@e[name=SYSTEM,score_power_up_option=5,score_power_up_option_min=5]"}
+		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:bow,Count:1},{Slot:14,id:arrow,Count:5}]}
+			
+	{"executeAs":"@e[name=SYSTEM,score_power_up_option=6,score_power_up_option_min=6]"}
+		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace {CustomName:- Power Up -,Items:[{Slot:13,id:deadbush,Count:1,tag:{display:{Name:"trolololol bush"}}}]}
+		
+	{"executeAs":""}
+			
+	-- Summon final fireworksSpark for landing: bigger to signify impact.	
+	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ particle fireworksSpark ~ ~2 ~ 1 1 1 0.1 200 force
+		
+	-- Play sound to replace fireworks sound
+	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ playsound random.explode @a ~ ~ ~ 1 1 1
+			
+	-- Replace cr_falling_powerup with cr_powerup_position
+	/entitydata @e[name=cr_falling_powerup,score_power_ups=0] {CustomName:"cr_powerup_position"}
+
+# GIVE POWERUPS
+!function GivePowerups
+	{"type":"chain", "conditional":false}
+	-- Summon powerups to east/north/west/south of each player
+	-- EAST FACING
+	/execute @a[m=2,rym=-135,ry=-45] ~ ~ ~ summon ArmorStand ~10 120 ~ {CustomName:"cr_falling_powerup",Marker:true,Invisible:true}
+	-- NORTH FACING
+	/execute @a[m=2,rym=135,ry=-135]~ ~ ~ summon ArmorStand ~ 120 ~-10 {CustomName:"cr_falling_powerup",Marker:true,Invisible:true}
+	-- WEST FACING
+	/execute @a[m=2,rym=46,ry=135] ~ ~ ~ summon ArmorStand ~-10 120 ~ {CustomName:"cr_falling_powerup",Marker:true,Invisible:true}
+	-- SOUTH FACING
+	/execute @a[m=2,rym=-45,ry=45] ~ ~ ~ summon ArmorStand ~ 120 ~10 {CustomName:"cr_falling_powerup",Marker:true,Invisible:true}
+	-- Run CyclePowerups again for next powerup
+	!run_function CyclePowerups
+	-- Play a thunder sound
+	/playsound ambient.weather.thunder @a ~ ~ ~ 0.2 1 0.2
+	
+# CANCEL POWERUPS
+!function CancelPowerups
+	{"type":"chain", "conditional":false}
+	-- Turn off loop and reset countdown
+	!exit_loop Powerups
+	-- Kill any power ups that are falling
+	/kill @e[name=cr_falling_powerup]
+	-- Disable counter. Set to -1 so that last run of Powerups loop doesn't trigger a new powerup.
+	/scoreboard players set @e[name=SYSTEM] countdown -1
+	-- Remove left over powerups
+	/execute @e[name=cr_powerup_position] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:air 0
+	-- Remove cr_powerup_position
+	/kill @e[name=cr_powerup_position]

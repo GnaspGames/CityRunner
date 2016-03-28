@@ -1,0 +1,69 @@
+-----------------------------
+--    Setup / Reset Map    --
+-----------------------------
+-- This module is used to start/reset the map when needed.
+
+# START / RESET
+{"type":"repeating", "auto": true}
+/kill @e[type=ArmorStand,name=RESET]
+	{"conditional":true}
+	/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say RESETTING MAP
+		{"type":"chain", "conditional":false}
+		
+		-- ## Use correct game rules ##
+		/gamerule doDaylightCycle false
+		/gamerule logAdminCommands false
+		/gamerule doMobSpawning false
+		/gamerule mobGriefing false
+		/gamerule showDeathMessages true
+		/gamerule commandBlockOutput false
+		/gamerule sendCommandFeedback false
+		/gamerule keepInventory true
+		
+		-- ## Reset all objectives ##
+		-- Use this objective to track whether players need to be moved to a lobby
+		!reset_objective lobbyStatus dummy LOBBY STATUS
+		-- This objective is used to monitor 'testfor' command blocks SuccessCount
+		!reset_objective testforOutput dummy TESTFOR OUTPUT
+		-- Use this objective to allow players to trigger a new game
+		!reset_objective trigger_start trigger TRIGGER START
+		-- Use this objective on the main "SYSTEM" ArmorStand to manage countdown events
+		!reset_objective countdown dummy COUNTDOWN
+		-- Use these scoreboards to keep track of which stands are the current starting and finishing point. 
+		!reset_objective start_points dummy START POINTS
+		!reset_objective finish_points dummy FINISH POINTS
+		-- Use this objective to track how many times players have won (since last reset).
+		!reset_objective total_wins dummy TOTAL WINS
+		-- Use this objective to track how close players are to the finish
+		!reset_objective distance dummy DISTANCE TO FINISH
+		-- Use this to track powerups falling from the sky
+		!reset_objective power_ups dummy POWER UPS
+		-- Use this to preselect a random power up option to be used
+		!reset_objective power_up_option dummy POWER UP OPTION
+		-- This is used to track deaths during a race. Dying puts the player into specator mode
+		!reset_objective deaths stat.deaths DEATHS
+		!reset_objective timeSinceDeath stat.timeSinceDeath TIME SINCE DEATH
+		!reset_objective deaths_dummy dummy DEATHS DUMMY
+		-- hasIntroBook is used to stop player being given intro book too much
+		!reset_objective hasIntroBook dummy HAS INTRO BOOK
+		-- hasCreditsBook same as above
+		!reset_objective hasCreditsBook dummy HAS CREDITS BOOK
+		-- inGame
+		!reset_objective inGame dummy IN GAME
+		-- USed to keep track of villagers that need custom heads
+		!reset_objective villagerNoHead dummy VILLAGER NEEDS A HEAD
+		
+		-- Recreate SYSTEM entity
+		/kill @e[type=ArmorStand,name=SYSTEM]
+		/summon ArmorStand -88.0 19.0 -88.0 { NoGravity : 1b, Invulnerable : 1b, CustomName : "SYSTEM", CustomNameVisible : 1b }
+		-- Finish
+		/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say THE MAP HAS BEEN RESET
+		
+		-- Default loops that should be running
+		!run_loop TriggerStart
+		
+#
+# RUN RESET
+{"type":"impulse","auto":false,"conditional":false}
+/summon ArmorStand ~ ~ ~ {CustomName:RESET}
+

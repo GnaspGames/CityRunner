@@ -1,0 +1,71 @@
+--#######################--
+--        TOOLS          --
+--#######################--
+
+-- Useful tools for CityRunner development.
+
+# SHOW ARMORSTANDS	
+!loop ShowStartPoints
+	{"type":"chain", "auto":true}
+	/execute @e[name=cr_start_point] ~ ~ ~ particle endRod ~ ~2 ~ 1 1 1 0.1 1
+!loop ShowFinishPoints
+	{"type":"chain", "auto":true}
+	/execute @e[name=cr_start_point] ~ ~ ~ particle endRod ~ ~2 ~ 1 1 1 0.1 1
+	
+#
+# PAINT
+!loop Paint
+	{"type":"chain", "auto":true}
+	-- Paint 1: bedrock layer
+	/execute @a[score_paint_min=1,score_paint=1] ~ ~ ~ fill ~-10 62 ~-10 ~9 63 ~9 minecraft:bedrock 0 replace minecraft:air 0
+	-- Paint 2 & 3: Black road
+	/execute @a[score_paint_min=2,score_paint=3] ~ ~ ~ fill ~-4 ~-1 ~-4 ~4 ~-1 ~4 minecraft:coal_block 0 replace minecraft:bedrock 0
+	-- Paint 2: White line x
+	/execute @a[score_paint_min=2,score_paint=2] ~ ~ ~ fill ~-4 ~-1 ~ ~4 ~-1 ~ minecraft:wool 0 replace minecraft:coal_block 0
+	-- Paint 3: White line z
+	/execute @a[score_paint_min=3,score_paint=3] ~ ~ ~ fill ~ ~-1 ~-4 ~ ~-1 ~4 minecraft:wool 0 replace minecraft:coal_block 0
+	-- Paint 4: Pavement
+	/execute @a[score_paint_min=4,score_paint=4] ~ ~ ~ fill ~ ~-1 ~ ~1 ~-1 ~1 minecraft:stone 6 replace bedrock 0
+	-- Paint 5: Dirt path
+	/execute @a[score_paint_min=5,score_paint=5] ~ ~ ~ fill ~ ~-1 ~ ~1 ~-1 ~1 minecraft:dirt 1 replace grass 0
+	-- Paint 6: Sea Bed (Dirt)
+	/execute @a[score_paint_min=6,score_paint=6] ~ ~ ~ fill ~-10 49 ~-10 ~9 53 ~9 minecraft:dirt 0
+	-- Paint 7: Sand (careful!)
+	/execute @a[score_paint_min=7,score_paint=7] ~ ~ ~ fill ~-3 58 ~-3 ~2 61 ~2 minecraft:sand 0 replace minecraft:air 0
+	-- Paint 8: Water (sea level)
+	/execute @a[score_paint_min=8,score_paint=8] ~ ~ ~ fill ~-6 58 ~-6 ~5 61 ~5 minecraft:water 0 replace minecraft:air 0
+	-- Paint 9: Remove Water (sea)
+	/execute @a[score_paint_min=9,score_paint=9] ~ ~ ~ fill ~-6 51 ~-6 ~5 61 ~5 minecraft:sponge 0 replace minecraft:water
+	/execute @a[score_paint_min=9,score_paint=9] ~ ~ ~ fill ~-6 51 ~-6 ~5 61 ~5 minecraft:air 0 replace minecraft:sponge
+	-- Paint 10: Grass (replace bedrock)
+	/execute @a[score_paint_min=10,score_paint=10] ~ ~ ~ fill ~-3 ~-1 ~-3 ~3 ~-1 ~3 minecraft:grass 6 replace bedrock 0
+	-- Paint 11: Boardwalk
+	/execute @a[score_paint_min=11,score_paint=11] ~ ~ ~ fill ~-6 ~-4 ~-6 ~6 ~-1 ~6 minecraft:grass 0 replace minecraft:bedrock
+	//execute @a[score_paint_min=11,score_paint=11] ~ ~ ~ fill ~-4 ~-1 ~-4 ~4 ~-1 ~4 minecraft:planks 0 replace air
+	//execute @a[score_paint_min=11,score_paint=11] ~ ~ ~ fill ~-1 ~-1 ~-1 ~1 ~-1 ~1 minecraft:planks 2 replace minecraft:planks 0
+	-- Paint 12: Grass circles underneath player
+	/execute @a[score_paint_min=12,score_paint=12] ~ ~ ~ fill ~4 ~-1 ~ ~-4 ~-1 ~ minecraft:grass 0 replace minecraft:air 0
+	/execute @a[score_paint_min=12,score_paint=12] ~ ~ ~ fill ~3 ~-1 ~1 ~-3 ~-1 ~-1 minecraft:grass 0 replace minecraft:air 0
+	/execute @a[score_paint_min=12,score_paint=12] ~ ~ ~ fill ~2 ~-1 ~2 ~-2 ~-1 ~-2 minecraft:grass 0 replace minecraft:air 0
+	/execute @a[score_paint_min=12,score_paint=12] ~ ~ ~ fill ~1 ~-1 ~3 ~-1 ~-1 ~-3 minecraft:grass 0 replace minecraft:air 0
+	/execute @a[score_paint_min=12,score_paint=12] ~ ~ ~ fill ~ ~-1 ~4 ~ ~-1 ~-4 minecraft:grass 0 replace minecraft:air 0
+	
+# 
+# TURN ON PAIN
+{"type":"impulse", "auto":false}
+	!run_loop Paint
+	{"type":"chain", "auto":true}
+		/say TURN ON PAINT
+		/scoreboard objectives setdisplay sidebar paint
+
+# 
+# TURN OFF PAIN
+{"type":"impulse", "auto":false}
+	!exit_loop Paint
+	{"type":"chain", "auto":true}
+		/say TURN OFF PAINT
+		/scoreboard objectives setdisplay sidebar
+	
+	
+	
+	

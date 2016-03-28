@@ -1,0 +1,50 @@
+--##- Housekeeping --##--
+
+-- Commands here are used to keep certain things on track.
+
+# MOB CLEANING
+-- Use this to clean thigs up while the map is running. E.g. get rid of Iron Golems, keep Villagers silent. 
+!loop MobCleaning
+	{"type":"chain", "conditional":false}
+	-- Remove Iron Golems that spawn because of villagers
+	/tp @e[type=VillagerGolem] 0 10 0
+	-- Keep villagers quiet
+	/entitydata @e[type=Villager] {Silent:1}
+	-- Give villagers with no skull a score of 1
+	/scoreboard players tag @e[type=Villager] add villagerNoHead
+	/scoreboard players tag @e[type=Villager] remove villagerNoHead {ArmorItems:[3:{id:minecraft:skull}]}
+	/execute @r[type=ArmorStand,tag=randomVillagerHead] ~ ~ ~ blockdata ~ ~ ~ {auto:1b}
+	/execute @e[type=ArmorStand,tag=randomVillagerHead] ~ ~ ~ blockdata ~ ~ ~ {auto:0b}	
+	
+#
+# RANDOM HEADS
+{"type":"impulse","auto":false,"conditional":false}
+{"markerTag":"randomVillagerHead"}
+	-- Men
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"f2bd3780-d093-4c86-ef83-bac8ccf95bc0",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ4MjNkOWExNWRhZDFiNzY3YTI2MDU0ZGQ0N2IxNGJiZWZlNWI3ZWUxOTk5YTMwNmMyODZmMThhNmZjOTU2MSJ9fX0="}]}}}				
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"99f2a0b5-f94d-c28a-5d25-5c0a72c3f419",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzU3YjgzYWE4M2JiY2FjNTQ3YzZhMjk3MzdiMzkxOWUyYjFkYWE1NGViY2QzNWJkYmY3NmYwYzEzZGU1MyJ9fX0="}]}}}
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"76e9adee-7ac2-addc-45fb-6ccca3f24521",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGJmNmRkMjM1MTlkYTc1MjVlZjJkNGIzNmZiZmM0MjBlYTRiY2I1NmYzYWU3OThmYjM2YTFlNWZhYjFiZTBhZiJ9fX0="}]}}}
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"2383b21c-1423-4007-9d00-5d8e94d4f67f",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmY3YTdlNjRkMTVmMzQzOTFlZDMzYTQzM2VkZWJmODY5NzY4MTRiZjM0YjNjYzJjNjMzOTIyYjFhNGFmNTYifX19"}]}}}
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"11adf43e-066a-a708-0872-b3713a3b9537",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzM0ZTQwOTA2MDRjY2U3YmM3NjZmOGEwNTQ3N2U3NjI3NGIxZGM1OGE3MGE2Mzg3OGM1NTUzNGEyMmU2MWIifX19"}]}}}
+	-- Women
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"c52c903c-0e3f-2d72-c4f0-c8d06247c497",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWRhNWJkZDdhMzYxNzRmZGM2ZjhhYjNiZGU1OTUzNGUyMjZjZWYxY2U5MWZjNWM3NTQzZmJlZDNlYWI4MzdiIn19fQ=="}]}}}
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"bddee536-2fe5-8c36-ef90-b5bc7d28ce42",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTUzZTQ5Y2E5ODc3Yzk5NzU2NmVmNDA4ZWI2ZTY0YmI0YzY4NTg3MjY2OTkyNzllMzFhNjk0ZjdkZjZiZGIxIn19fQ=="}]}}}
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"d39b2e46-4c0a-f6e1-a3e4-98b5cf373448",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2Y0NTM4Mzk2MmNhNzFlMDFhNmZiNWY3ZWNiMzNkY2VmYWQwYWZiYzc1MTA4YmZmMzY4NmNjNjZlYjFjNjkifX19"}]}}}
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"cda81293-f758-08af-d098-6ffa13d3ed93",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTBiM2E1ZmM2MDI2ZTBmM2U5OTRhYWM2NTVjZmU5NjFiNWQ5NmFiNGU4NzQ1MWQ2OGNhNzM0NzU1ZDMxMyJ9fX0="}]}}}	
+	-- Police Man
+	/replaceitem entity @e[type=Villager,tag=villagerNoHead] slot.armor.head skull 1 3 {SkullOwner:{Id:"fe2ac5ee-5c55-4916-b007-38be0592e75c",Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjcxNTdjZmZiMDYwNjNiMzUyZGM2ODQ3OGY0NzZlN2QyMDJjM2JhNmU3Y2JmMjk3MjQxYmU4MTY4MTA3NGJmIn19fQ=="}]}}}
+{"markerTag":""}
+
+#
+# TURN ON
+{"type":"impulse","auto":false,"conditional":false}
+!run_loop MobCleaning
+	{"type":"chain","auto":true}
+	/say TURN ON HOUSEKEEPING
+
+#
+# TURN OFF
+{"type":"impulse","auto":false,"conditional":false}
+!exit_loop MobCleaning
+	{"type":"chain","auto":true}
+	/say TURN OFF HOUSEKEEPING

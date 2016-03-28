@@ -1,0 +1,18 @@
+/give @p written_book 1 0 
+{
+	pages:[
+		"[\"\",
+			{\"text\":\"City Runner Credits\n\n\",\"underlined\":\"true\"},
+			{\"text\":\"Thanks to:\n\n\",\"underlined\":\"false\"},
+			{\"text\":\"Rock Rubble\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.youtube.com/channel/UCbDCY76NR0caT9QZyDT3TeQ\"}},
+			{\"text\":\"smartslime \nlandrover \nowen \nollycar \nbrettus_maximus \nSmijjy \n\",\"color\":\"none\",\"underlined\":\"false\"},
+			{\"text\":\"CalebRTM\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/CalebRTM\"}},
+			{\"text\":\"JaffaNut\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/TheBowTieGamer\"}},
+			{\"text\":\"Arcaniax\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/Arcaniax\"}},
+			
+			{\"text\":\"The Crit.Map guys!\n\",\"color\":\"none\"}
+		]"
+	],
+	title:"City Runner Credits",
+	author:Gnasp
+}
