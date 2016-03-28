@@ -81,7 +81,7 @@
 	{"executeAs":""}
 			
 	-- Summon final fireworksSpark for landing: bigger to signify impact.	
-	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ particle fireworksSpark ~ ~2 ~ 1 1 1 0.1 200 force
+	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ particle fireworksSpark ~ ~2 ~ 1 1 1 0.1 200
 		
 	-- Play sound to replace fireworks sound
 	/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~ ~ playsound random.explode @a ~ ~ ~ 1 1 1
@@ -119,3 +119,19 @@
 	/execute @e[name=cr_powerup_position] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:air 0
 	-- Remove cr_powerup_position
 	/kill @e[name=cr_powerup_position]
+	
+# 
+# TURN ON POWERUPS
+{"type":"impulse", "auto":false}
+	!run_function StartPowerups
+	{"type":"chain", "auto":true}
+		/say TURN ON POWERUPS
+		/scoreboard objectives setdisplay sidebar countdown
+		
+# 
+# TURN OFF POWERUPS
+{"type":"impulse", "auto":false}
+	!run_function CancelPowerups
+	{"type":"chain", "auto":true}
+		/say TURN OFF POWERUPS
+		/scoreboard objectives setdisplay sidebar
