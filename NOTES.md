@@ -77,11 +77,5 @@ We're using this scoreboard to keep track of Marker ArmorStands that are used fo
 
 `/scoreboard objectives add area_names dummy AREA NAMES`
 
-### VILLAGER NEEDS A HEAD
-
-Used to flag villager without a player head and then give them one.
-
-`/scoreboard objectives add villagerNoHead dummy VILLAGER NEEDS A HEAD`
-
 
 
