@@ -26,8 +26,8 @@
 	/execute @a[score_paint_min=3,score_paint=3] ~ ~ ~ fill ~ ~-1 ~-4 ~ ~-1 ~4 minecraft:wool 0 replace minecraft:coal_block 0
 	-- Paint 4: Pavement
 	/execute @a[score_paint_min=4,score_paint=4] ~ ~ ~ fill ~ ~-1 ~ ~1 ~-1 ~1 minecraft:stone 6 replace bedrock 0
-	-- Paint 5: Dirt path
-	/execute @a[score_paint_min=5,score_paint=5] ~ ~ ~ fill ~ ~-1 ~ ~1 ~-1 ~1 minecraft:dirt 1 replace grass 0
+	-- Paint 5: grass path
+	/execute @a[score_paint_min=5,score_paint=5] ~ ~ ~ fill ~ ~-1 ~ ~1 ~-1 ~1 minecraft:grass_path 0 replace grass 0
 	-- Paint 6: Sea Bed (Dirt)
 	/execute @a[score_paint_min=6,score_paint=6] ~ ~ ~ fill ~-10 49 ~-10 ~9 53 ~9 minecraft:dirt 0
 	-- Paint 7: Sand (careful!)
@@ -51,7 +51,7 @@
 	/execute @a[score_paint_min=12,score_paint=12] ~ ~ ~ fill ~ ~-1 ~4 ~ ~-1 ~-4 minecraft:grass 0 replace minecraft:air 0
 	
 # 
-# TURN ON PAIN
+# TURN ON PAINT
 {"type":"impulse", "auto":false}
 	!run_loop Paint
 	{"type":"chain", "auto":true}
@@ -59,7 +59,7 @@
 		/scoreboard objectives setdisplay sidebar paint
 
 # 
-# TURN OFF PAIN
+# TURN OFF PAINT
 {"type":"impulse", "auto":false}
 	!exit_loop Paint
 	{"type":"chain", "auto":true}
