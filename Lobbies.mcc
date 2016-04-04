@@ -18,22 +18,16 @@
 
 # LOBBY OPTIONS
 {"type":"repeating", "auto": true}
-
-	-- INTRODUCTION BOOK
-	{"executeAs":"@e[name=cr_give_book]"}
-		/execute @a[r=0,score_hasIntroBook=0] ~ ~ ~ give @p written_book 1 0 { pages:["[\"\",{\"text\":\"City Runner\nIntroduction Book\",\"underlined\":\"true\"},{\"text\":\"\n(Beta)\",\"underlined\":\"false\"},{\"text\":\"\n\nREADME on Github\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://github.com/GnaspGames/CityRunner/blob/master/README.md\"}},{\"text\":\"\n\nWelcome. This game is currently in beta. Please read the README on github first, and be prepared for bugs. P.T.O.\",\"color\":\"none\",\"underlined\":\"false\"}]","[\"\",{\"text\":\"Please give all feedback to Gnasp:\"},{\"text\":\"\n\nOpen Github Issue\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://github.com/GnaspGames/CityRunner/issues/new\"}},{\"text\":\"\n\nTwitter: @GnaspGames\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/GnaspGames\"}},{\"text\":\"\n\nSkype Group Chat\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://join.skype.com/er1St99\"}},{\"text\":\"\n\nReddit: Gnasp\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.reddit.com/user/gnasp\"}},{\"text\":\"\n\nThank you!\",\"color\":\"none\",\"underlined\":\"false\"}]"], title:"City Runner Introduction", author:Gnasp}
-		{"type":"chain"}	
-		/scoreboard players set @a[r=0,score_hasIntroBook=0] hasIntroBook 1
-		/scoreboard players set @a[rm=1] hasIntroBook 0
-	{"executeAs":""}
-		
 	-- ENTER THE CITY
 	{"executeAs":"@e[name=cr_enter_city]"}
+		/particle portal ~ ~ ~ 0.2 1.0 0.2 0.1 5
+		{"type":"chain"}
 		/execute @a[r=1] ~ ~ ~ spawnpoint @p 2043 65 2046
 		/execute @a[r=1] ~ ~ ~ scoreboard players set @p inGame 1
 		/execute @a[r=1] ~ ~ ~ title @p title ["",{"text":"Carrera City"}]
 		/execute @a[r=1] ~ ~ ~ title @p subtitle ["",{"text":"Welcome! See the chat area for options"}]
-		/execute @a[r=1] ~ ~ ~ tellraw @p ["",{"text":"Start a race now? "},{"text":"YES","color":"white","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
+		/execute @a[r=1] ~ ~ ~ tellraw @p \
+		["",{"text":"Start a race now? "},{"text":"YES","color":"white","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
 		-- # TEMP: Creative Mode 
 		/execute @a[r=1] ~ ~ ~ gamemode creative @p
 		/execute @a[r=1] ~ ~ ~ scoreboard players enable @p trigger_start
@@ -46,9 +40,16 @@
 		/execute @a[r=3] ~ ~ ~ scoreboard players set @p lobbyStatus 0
 	{"executeAs":""}
 	
+	-- INTRODUCTION BOOK
+	{"executeAs":"@e[name=cr_give_book]"}
+		!givebook @a[r=1,tag=!hasIntroBook] Books\Introduction.txt
+		/scoreboard players tag @a[r=1,tag=!hasIntroBook] add hasIntroBook
+		/scoreboard players tag @a[rm=2] remove hasIntroBook
+	{"executeAs":""}
+	
 	-- CREDITS BOOK
 	{"executeAs":"@e[name=cr_give_credits]"}
-			/execute @a[r=0,score_hasCreditsBook=0] ~ ~ ~ give @p written_book 1 0 { pages:["[\"\",{\"text\":\"City Runner Credits\n\n\",\"underlined\":\"true\"},{\"text\":\"Thanks to:\n\n\",\"underlined\":\"false\"},{\"text\":\"badbuboboy\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.youtube.com/channel/UCbDCY76NR0caT9QZyDT3TeQ\"}},{\"text\":\"CalebRTM\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/CalebRTM\"}},{\"text\":\"JaffaNut\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/TheBowTieGamer\"}},{\"text\":\"Arcaniax\n\",\"color\":\"dark_blue\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/Arcaniax\"}},{\"text\":\"smartslime160204 \nbrettus_maximus \nlandrover3 \nollycar \nSmijjy \n\",\"color\":\"none\",\"underlined\":\"false\"},{\"text\":\"The Crit.Map guys!\n\",\"color\":\"none\"}]"], title:"City Runner Credits", author:Gnasp}
-			/scoreboard players set @a[r=0,score_hasCreditsBook=0] hasCreditsBook 1
-			/scoreboard players set @a[rm=1] hasCreditsBook 0
+			!givebook @a[r=1,tag=!hasCreditsBook] Books\Credits.txt
+			/scoreboard players tag @a[r=1,tag=!hasCreditsBook] add hasCreditsBook
+			/scoreboard players tag @a[rm=2] remove hasCreditsBook
 	{"executeAs":""}
