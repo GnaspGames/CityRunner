@@ -25,7 +25,7 @@ Please give all feedback to Gnasp:
 * [Open a Github Issue](https://github.com/GnaspGames/CityRunner/issues/new)
 * [Twitter: @GnaspGames](http://twitter.com/GnaspGames)
 * [Reddit: Gnasp](https://www.reddit.com/user/gnasp)
-* [Skype group chat](https://join.skype.com/er1St99)
+* [Discord chat](https://discord.gg/0nmhmSh7gXXjLjrf)
 
 You can also follow the progress in the making of this map on trello:
 
