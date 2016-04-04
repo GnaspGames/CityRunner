@@ -69,7 +69,7 @@
 	/scoreboard players set @e[type=ArmorStand,name=cr_start_spawn] start_points 0
 	-- Give players starting effects
 	/effect @a minecraft:speed 1000 3 true
-	/give @a minecraft:ender_pearl 5
+	/give @a minecraft:ender_pearl 3
 	-- Choose a new Finish Point
 	/scoreboard players set @r[type=ArmorStand,name=cr_finish_point] finish_points 1
 	-- Set the beacon block to turn it on
