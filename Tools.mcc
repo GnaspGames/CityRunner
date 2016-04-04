@@ -7,10 +7,10 @@
 # SHOW ARMORSTANDS	
 !loop ShowStartPoints
 	{"type":"chain", "auto":true}
-	/execute @e[name=cr_start_point] ~ ~ ~ particle endRod ~ ~2 ~ 1 1 1 0.1 1
+	/execute @e[name=cr_start_point] ~ ~ ~ particle endRod ~ ~2 ~ 1 1 1 0 1
 !loop ShowFinishPoints
 	{"type":"chain", "auto":true}
-	/execute @e[name=cr_start_point] ~ ~ ~ particle endRod ~ ~2 ~ 1 1 1 0.1 1
+	/execute @e[name=cr_finish_point] ~ ~ ~ particle endRod ~ ~1 ~ 0 10 0 0 10
 	
 #
 # PAINT

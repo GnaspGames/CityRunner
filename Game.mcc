@@ -94,6 +94,9 @@
 	-- Display "Distance" scoreboard and start loop
 	/scoreboard objectives setdisplay sidebar distance
 	!run_loop CalcDistance
+	-- TEMPORARY: Turn off builing tools
+	!exit_loop ShowStartPoints
+	!exit_loop ShowFinishPoints
 
 # DISTANCE CALC
 !loop CalcDistance
@@ -185,8 +188,6 @@
 	-- Clear all inventories and effects
 	/effect @a clear
 	/clear @a
-	-- TEMPORARY: Put all players back to creative mode
-	/gamemode creative @a
 	-- Stop DetectDeaths
 	!exit_loop DetectDeaths
 	-- Reset all death counts
@@ -197,4 +198,8 @@
 	/scoreboard objectives setdisplay sidebar total_wins
 	-- Stop the power ups, call CancelPowerups
 	!run_function CancelPowerups
+	-- TEMPORARY: Put all players back to creative mode
+	/gamemode creative @a
+	!run_loop ShowStartPoints
+	!run_loop ShowFinishPoints
 
