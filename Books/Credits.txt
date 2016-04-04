@@ -3,52 +3,37 @@
 	[
 		"[
 			\"\",
+			{\"text\":\"THANKS TO:\n\"},
+			{\"text\":\"RockRubble \n\"},
+			{\"text\":\"smartslime \n\"},
+			{\"text\":\"landrover \"},
 			{
-				\"text\":\"City Runner Credits \n\n\",
-				\"underlined\":\"true\"
-			},
-			{
-				\"text\":\"Thanks to:\n\n\",
-				\"underlined\":\"false\"
-			},
-			{
-				\"text\":\"Rock Rubble \n\",
+				\"text\":\"[YouTube]\n\",
 				\"color\":\"dark_blue\",
 				\"underlined\":\"true\",
-				\"clickEvent\":
-				{
-					\"action\":\"open_url\",
-					\"value\":\"https://www.youtube.com/channel/UCbDCY76NR0caT9QZyDT3TeQ\"
-				}
+				\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.youtube.com/channel/UCrs_pMRZpD0zOeHwNi2PqOA\"}
 			},
-			{\"text\":\"smartslime \n\"},
-			{\"text\":\"landrover \n\"},
-			{\"text\":\"owen \n\"},
-			{\"text\":\"ollycar \n\"},
+			{\"text\":\"LegoNemo \",\"color\":\"reset\"},
+			{
+				\"text\":\"[YouTube]\n\",
+				\"color\":\"dark_blue\",
+				\"underlined\":\"true\",
+				\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.youtube.com/user/LegoNemo10\"}
+			},
+			{\"text\":\"ollycar \n\",\"color\":\"reset\"},
 			{\"text\":\"brettus_maximus \n\"},
 			{\"text\":\"Smijjy \n\"},
+			{\"text\":\"CalebRTM \n\"},
+			{\"text\":\"JaffaNut \"},
 			{
-				\"text\":\"CalebRTM \n\",
+				\"text\":\"[Twitter]\n\",
 				\"color\":\"dark_blue\",
 				\"underlined\":\"true\",
-				\"clickEvent\":
-				{
-					\"action\":\"open_url\",
-					\"value\":\"https://twitter.com/CalebRTM\"
-				}
+				\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://twitter.com/TheBowTieGamer\"}
 			},
+			{\"text\":\"Arcaniax \",\"color\":\"reset\"},
 			{
-				\"text\":\"JaffaNut \n\",
-				\"color\":\"dark_blue\",
-				\"underlined\":\"true\",
-				\"clickEvent\":
-				{
-					\"action\":\"open_url\",
-					\"value\":\"https://twitter.com/TheBowTieGamer\"
-				}
-			},
-			{
-				\"text\":\"Arcaniax \n\",
+				\"text\":\"[Twitter]\n\",
 				\"color\":\"dark_blue\",
 				\"underlined\":\"true\",
 				\"clickEvent\":{
@@ -56,10 +41,7 @@
 					\"value\":\"https://twitter.com/Arcaniax\"
 				}
 			},
-			{
-				\"text\":\"The Crit.Map guys! \n\",
-				\"color\":\"none\"
-			}
+			{\"text\":\"The Crit.Map and testfor[dev] guys!\",\"color\":\"reset\"}			
 		]"
 	],
 	title:"City Runner Credits",
