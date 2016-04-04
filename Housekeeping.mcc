@@ -2,7 +2,7 @@
 
 -- Commands here are used to keep certain things on track.
 
-# MOB CLEANING
+# MOBS
 -- Use this to clean thigs up while the map is running. E.g. get rid of Iron Golems, keep Villagers silent. 
 !loop MobCleaning
 	{"type":"chain", "conditional":false}
@@ -15,6 +15,8 @@
 	/scoreboard players tag @e[type=Villager] remove villagerNoHead {ArmorItems:[3:{id:minecraft:skull}]}
 	/execute @r[type=ArmorStand,tag=randomVillagerHead] ~ ~ ~ blockdata ~ ~ ~ {auto:1b}
 	/execute @e[type=ArmorStand,tag=randomVillagerHead] ~ ~ ~ blockdata ~ ~ ~ {auto:0b}	
+	-- Keep mobs with "noGravity" tag from moving
+	/entitydata @e[tag=noGravity] {Motion:[0.0,0.0,0.0]}
 	
 #
 # RANDOM HEADS

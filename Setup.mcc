@@ -44,14 +44,13 @@
 		!reset_objective deaths stat.deaths DEATHS
 		!reset_objective timeSinceDeath stat.timeSinceDeath TIME SINCE DEATH
 		!reset_objective deaths_dummy dummy DEATHS DUMMY
-		-- hasIntroBook is used to stop player being given intro book too much
-		!reset_objective hasIntroBook dummy HAS INTRO BOOK
-		-- hasCreditsBook same as above
-		!reset_objective hasCreditsBook dummy HAS CREDITS BOOK
 		-- inGame
 		!reset_objective inGame dummy IN GAME
-		-- USed to keep track of villagers that need custom heads
-		!reset_objective villagerNoHead dummy VILLAGER NEEDS A HEAD
+		
+		-- No longer needed, remove later
+		/scoreboards objectives remove villagerNoHead
+		/scoreboards objectives remove hasIntroBook
+		/scoreboards objectives remove hasCreditsBook
 		
 		-- Recreate SYSTEM entity
 		/kill @e[type=ArmorStand,name=SYSTEM]
@@ -61,6 +60,7 @@
 		
 		-- Default loops that should be running
 		!run_loop TriggerStart
+		!run_loop MobCleaning
 		
 #
 # RUN RESET

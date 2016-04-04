@@ -43,7 +43,7 @@
 	
 	-- If score is 1, it's still in the air, show fireworks spark
 	{"executeAs":"@e[name=cr_falling_powerup,score_power_ups=1]"}
-		/particle fireworksSpark ~ ~2 ~ 0.2 0 0.2 0.1 100 force
+		/particle fireworksSpark ~ ~2 ~ 0.2 0 0.2 0.1 100
 		
 	-- If score is 0, it's now on the ground. Summon a chest and so on.
 	{"executeAs":"@e[name=SYSTEM,score_power_up_option=1,score_power_up_option_min=1]"}
