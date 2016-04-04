@@ -42,6 +42,7 @@
 	
 	-- INTRODUCTION BOOK
 	{"executeAs":"@e[name=cr_give_book]"}
+		/particle enchantmenttable ~ ~ ~ 0.4 1 0.4 0 1
 		!givebook @a[r=1,tag=!hasIntroBook] Books\Introduction.txt
 		/scoreboard players tag @a[r=1,tag=!hasIntroBook] add hasIntroBook
 		/scoreboard players tag @a[rm=2] remove hasIntroBook
@@ -49,7 +50,8 @@
 	
 	-- CREDITS BOOK
 	{"executeAs":"@e[name=cr_give_credits]"}
-			!givebook @a[r=1,tag=!hasCreditsBook] Books\Credits.txt
-			/scoreboard players tag @a[r=1,tag=!hasCreditsBook] add hasCreditsBook
-			/scoreboard players tag @a[rm=2] remove hasCreditsBook
+		/particle enchantmenttable ~ ~ ~ 0.4 1 0.4 0 1
+		!givebook @a[r=1,tag=!hasCreditsBook] Books\Credits.txt
+		/scoreboard players tag @a[r=1,tag=!hasCreditsBook] add hasCreditsBook
+		/scoreboard players tag @a[rm=2] remove hasCreditsBook
 	{"executeAs":""}
