@@ -57,6 +57,9 @@
 		-- Finish
 		/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say THE MAP HAS BEEN RESET
 		
+		-- Set time
+		/time set 12300
+		
 		-- Default loops that should be running
 		!run_loop TriggerStart
 		!run_loop MobCleaning

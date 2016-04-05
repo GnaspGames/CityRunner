@@ -32,7 +32,6 @@
 	{"type":"chain", "auto":true, "conditional":false}
 	{"executeAs":"@e[name=SYSTEM,score_countdown=100,score_countdown_min=100]"}
 		/title @a reset
-		
 	{"executeAs":"@e[name=SYSTEM,score_countdown=60,score_countdown_min=60]"}
 		/title @a title {"text":"3","color":"red","bold":"true"}
 		
@@ -104,6 +103,8 @@
 	/effect @a minecraft:regeneration 1 20
 	-- Display "Distance" scoreboard and start loop
 	/scoreboard objectives setdisplay sidebar distance
+	-- Set time for racing in dark
+	/time set 13000
 	!run_loop CalcDistance
 	-- TEMPORARY: Turn off builing tools
 	!exit_loop ShowStartPoints
@@ -215,6 +216,8 @@
 	/scoreboard objectives setdisplay sidebar total_wins
 	-- Stop the power ups, call CancelPowerups
 	!run_function CancelPowerups
+	-- Put the time back to afternoon
+	/time set 12300
 	-- TEMPORARY: Put all players back to creative mode
 	/gamemode creative @a
 	!run_loop ShowStartPoints
