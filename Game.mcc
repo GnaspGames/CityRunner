@@ -9,6 +9,8 @@
 	{"type":"chain", "auto":true, "conditional":false}
 	{"executeAs":"@a[score_trigger_start_min=1]"}
 		!run_function StartCountdown
+		-- Announce who started game
+		/tellraw @a ["",{"selector":"@p","color":"yellow","bold":"true"},{"text":" started a new race...","color":"yellow","bold":"true"}]
 		-- Stop players using trigger_start
 		!exit_loop TriggerStart
 		/scoreboard players reset @a trigger_start
@@ -30,19 +32,15 @@
 	{"type":"chain", "auto":true, "conditional":false}
 	{"executeAs":"@e[name=SYSTEM,score_countdown=100,score_countdown_min=100]"}
 		/title @a reset
-		/title @a title {"text":"5","color":"red","bold":"true"}
-		
-	{"executeAs":"@e[name=SYSTEM,score_countdown=80,score_countdown_min=80]"}	
-		/title @a title {"text":"4","color":"red","bold":"true"}
 		
 	{"executeAs":"@e[name=SYSTEM,score_countdown=60,score_countdown_min=60]"}
 		/title @a title {"text":"3","color":"red","bold":"true"}
 		
 	{"executeAs":"@e[name=SYSTEM,score_countdown=40,score_countdown_min=40]"}
-		/title @a title {"text":"2","color":"red","bold":"true"}
+		/title @a title {"text":"2","color":"gold","bold":"true"}
 		
 	{"executeAs":"@e[name=SYSTEM,score_countdown=20,score_countdown_min=20]"}
-		/title @a title {"text":"1","color":"red","bold":"true"}
+		/title @a title {"text":"1","color":"yellow","bold":"true"}
 		
 	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
 		/title @a title {"text":"Go!","color":"green","bold":"true"}
