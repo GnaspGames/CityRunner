@@ -52,15 +52,15 @@
 	
 	{"executeAs":"@e[name=SYSTEM,score_power_up_option=2,score_power_up_option_min=2]"}
 		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace \
-		{CustomName:- Power Up -,Items:[{Slot:13, id:potion, Count:1, tag:{CustomPotionEffects:[{Id:1,Amplifier:10,Duration:600}], display:{Name: "Speed Boost"}}}]}
+		{CustomName:- Power Up -,Items:[{Slot:13, id:potion, Count:1, tag:{CustomPotionEffects:[{Id:1,Amplifier:10,Duration:600}], display:{Name: "Speed Boost",Lore:["Run faster for 30 seconds after drinking"]}}}]}
 			
 	{"executeAs":"@e[name=SYSTEM,score_power_up_option=3,score_power_up_option_min=3]"}
 		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace \
-		{CustomName:- Power Up -,Items:[{Slot:13, id:potion, Count:1, tag:{CustomPotionEffects:[{Id:8,Amplifier:20,Duration:600}], display:{Name: "Jump Boost"}}}]}
+		{CustomName:- Power Up -,Items:[{Slot:13, id:potion, Count:1, tag:{CustomPotionEffects:[{Id:8,Amplifier:20,Duration:600}], display:{Name: "Jump Boost",Lore:["Jump higher for 30 seconds after drinking"]}}}]}
 			
 	{"executeAs":"@e[name=SYSTEM,score_power_up_option=4,score_power_up_option_min=4]"}
 		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace \
-		{CustomName:- Power Up -,Items:[{Slot:13, id:iron_sword, Count:1, tag:{display:{Name:"Blade Runner"}}}]}
+		{CustomName:- Power Up -,Items:[{Slot:13, id:iron_sword, Count:1, tag:{display:{Name:"Blade Runner",Lore:[ "Knock back the competition!" ]},ench: [{id:19,lvl:5}]}}]}
 			
 	{"executeAs":"@e[name=SYSTEM,score_power_up_option=5,score_power_up_option_min=5]"}
 		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace \
@@ -76,7 +76,7 @@
 			
 	{"executeAs":"@e[name=SYSTEM,score_power_up_option=8,score_power_up_option_min=8]"}
 		/execute @e[name=cr_falling_powerup,score_power_ups=0] ~ ~0.6 ~ setblock ~ ~ ~ minecraft:chest 2 replace \
-		{CustomName:- Power Up -,Items:[{Slot:13, id:potion, Count:3, tag:{CustomPotionEffects:[{Id: 25,Amplifier: 50,Duration: 10}], display:{Name:"Levitation"}}}]}
+		{CustomName:- Power Up -,Items:[{Slot:13, id:potion, Count:3, tag:{CustomPotionEffects:[{Id: 25,Amplifier: 50,Duration: 10}], display:{Name:"Levitation",Lore:["Shoot up into the air when you drink this"]}}}]}
 		
 	{"executeAs":""}
 			
