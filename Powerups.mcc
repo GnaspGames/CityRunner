@@ -105,6 +105,9 @@
 	!run_function CyclePowerups
 	-- Play a thunder sound
 	/playsound ambient.weather.thunder @a ~ ~ ~ 0.2 1 0.2
+	-- Show a the powerup symbol
+	/title @a title ["",{"text":"✈","color":"green"}]
+	
 	
 # CANCEL POWERUPS
 !function CancelPowerups
