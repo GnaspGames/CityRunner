@@ -179,6 +179,7 @@
 		-- Run EndGame
 		!run_function EndGame
 		-- Announce winner
+		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" wins! ","color":"green","bold":"true"}]
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" wins the race! ","color":"green","bold":"true"}]
 		-- Add 1 to the winners Total Wins
 		/scoreboard players add @p total_wins 1
