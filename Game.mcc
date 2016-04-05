@@ -68,29 +68,29 @@
 !function StartGame
 	{"type":"chain", "auto":true, "conditional":false}
 	-- Choose a new Start Point
-	/scoreboard players set @r[type=ArmorStand,name=cr_start_point] start_points 1
+	/scoreboard players tag @r[type=ArmorStand,name=cr_start_point] add ActiveStartPoint
 	-- Set up all viable spawn points around start point
-	/execute @e[name=cr_start_point,score_start_points_min=1] ~ ~ ~ scoreboard players set @e[name=cr_start_spawn,r=10] start_points 1
+	/execute @e[tag=ActiveStartPoint] ~ ~ ~ scoreboard players tag @e[name=cr_start_spawn,r=10] add ActiveSpawnPoint
 	-- Send players to a random spawn point.
-	/execute @a ~ ~ ~ tp @p @r[type=ArmorStand,name=cr_start_spawn,score_start_points_min=1]
+	/execute @a ~ ~ ~ tp @p @r[type=ArmorStand,tag=ActiveSpawnPoint]
 	/execute @a ~ ~ ~ spawnpoint ~ ~ ~	
 	-- Clear all inventories
 	/clear @a	
 	-- Reset start point scores
-	/scoreboard players set @e[type=ArmorStand,name=cr_start_point] start_points 0
-	/scoreboard players set @e[type=ArmorStand,name=cr_start_spawn] start_points 0
+	/scoreboard players tag @e[tag=ActiveStartPoint] remove ActiveStartPoint
+	/scoreboard players tag @e[tag=ActiveSpawnPoint] remove ActiveSpawnPoint
 	-- Give players starting effects
 	/effect @a minecraft:speed 1000 3 true
 	/execute @r[type=ArmorStand,tag=randomStartItem] ~ ~ ~ blockdata ~ ~ ~ {auto:1b}
 	/execute @e[type=ArmorStand,tag=randomStartItem] ~ ~ ~ blockdata ~ ~ ~ {auto:0b}
 	-- Choose a new Finish Point
-	/scoreboard players set @r[type=ArmorStand,name=cr_finish_point] finish_points 1
-	-- Set the beacon block to turn it on
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ \
-		setblock ~ ~ ~ minecraft:beacon
-	-- Announce the area name
-	/execute @e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ \
-		tellraw @a [{"text":"The finishing beacon is near: ","color":"green","bold":"true"},{"selector":"@e[type=ArmorStand,c=1,score_area_names_min=1]"}]
+	/scoreboard players tag @r[type=ArmorStand,name=cr_finish_point] add ActiveFinishPoint
+	{"executeAs":"@e[tag=ActiveFinishPoint]"}
+		-- Set the beacon block to turn it on
+		/setblock ~ ~ ~ minecraft:beacon
+		-- Announce the area name
+		/tellraw @a [{"text":"The finishing beacon is near: ","color":"green","bold":"true"},{"selector":"@e[type=ArmorStand,c=1,score_area_names_min=1]"}]
+	{"executeAs":""}
 	-- Turn on loop for win conditions
 	!run_loop DetectWin
 	-- Put all players into adventure mode
@@ -114,7 +114,7 @@
 # DISTANCE CALC
 !loop CalcDistance
 	{"type":"chain", "conditional":false}
-	{"executeAs":"@e[name=cr_finish_point,score_finish_points_min=1]"}
+	{"executeAs":"@e[tag=ActiveFinishPoint]"}
 		/scoreboard players set @a[m=2,rm=1,r=2] distance -1
 		/scoreboard players set @a[m=2,rm=2,r=3] distance -2
 		/scoreboard players set @a[m=2,rm=3,r=4] distance -3
@@ -163,7 +163,8 @@
 		-- Run EndGame
 		!run_function EndGame
 		-- Turn off finish point
-		/scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
+		/execute @e[tag=ActiveFinishPoint] ~ ~ ~ setblock ~ ~ ~ minecraft:air
+		/scoreboard players tag @e[tag=ActiveFinishPoint] remove ActiveFinishPoint
 	{"executeAs":""}	
 	 -- Reset testforOutput
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
@@ -172,7 +173,7 @@
 !loop DetectWin
 	{"type":"chain", "conditional":false}
 	-- Execute on anyone who gets to be directly above the finish point.
-	{"executeAs":"@e[name=cr_finish_point,score_finish_points_min=1] ~ ~ ~ execute @a[m=2,dy=200]"}
+	{"executeAs":"@e[tag=ActiveFinishPoint] ~ ~ ~ execute @a[m=2,dy=200]"}
 		-- Turn self off
 		!exit_loop DetectWin
 		-- Run EndGame
@@ -184,14 +185,13 @@
 		-- Create Fireworks
 		/summon FireworksRocketEntity ~ ~10 ~ { LifeTime:20, FireworksItem:{ id:401, Count:1, tag:{ Fireworks:{ Explosions:[{ Flicker:1, Trail:1, Type:1, Colors:[0], FadeColors:[0] },{ Flicker:1, Trail:1, Type:2, Colors:[16777215], FadeColors:[16777215] },{ Flicker:1, Trail:1, Type:4, Colors:[15000], FadeColors:[15000] }]}}}}
 		-- Remove finish point.	
-		/scoreboard players set @e[type=ArmorStand,name=cr_finish_point] finish_points 0
+		/execute @e[tag=ActiveFinishPoint] ~ ~ ~ setblock ~ ~ ~ minecraft:air
+		/scoreboard players tag @e[tag=ActiveFinishPoint] remove ActiveFinishPoint
 	{"executeAs":""}
 			
 # END GAME
 !function EndGame
 	{"type":"chain", "conditional":false}
-	-- Turn off all finish point beacons (should only be 1 really)
-	/execute @e[name=cr_finish_point] ~ ~ ~ setblock ~ ~ ~ minecraft:air
 	-- Allow all players to use trigger_start again and start loop
 	/scoreboard players set @a trigger_start 0
 	/scoreboard players enable @a trigger_start

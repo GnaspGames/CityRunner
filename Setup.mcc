@@ -29,9 +29,6 @@
 		!reset_objective trigger_start trigger TRIGGER START
 		-- Use this objective on the main "SYSTEM" ArmorStand to manage countdown events
 		!reset_objective countdown dummy COUNTDOWN
-		-- Use these scoreboards to keep track of which stands are the current starting and finishing point. 
-		!reset_objective start_points dummy START POINTS
-		!reset_objective finish_points dummy FINISH POINTS
 		-- Use this objective to track how many times players have won (since last reset).
 		!reset_objective total_wins dummy TOTAL WINS
 		-- Use this objective to track how close players are to the finish
@@ -51,6 +48,8 @@
 		/scoreboards objectives remove villagerNoHead
 		/scoreboards objectives remove hasIntroBook
 		/scoreboards objectives remove hasCreditsBook
+		/scoreboards objectives remove start_points
+		/scoreboards objectives remove finish_points
 		
 		-- Recreate SYSTEM entity
 		/kill @e[type=ArmorStand,name=SYSTEM]
