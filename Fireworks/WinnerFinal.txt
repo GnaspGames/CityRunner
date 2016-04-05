@@ -1,0 +1,31 @@
+{
+	LifeTime:45,
+	FireworksItem:
+	{
+		id:fireworks,
+		Count:1,
+		tag:
+		{
+			Fireworks:
+			{
+				Explosions:
+				[
+					{
+						Type:0,
+						Flicker:0,
+						Trail:1,
+						Colors:[15790320],
+						FadeColors:[15790320]
+					},
+					{
+						Type:1,
+						Flicker:0,
+						Trail:1,
+						Colors:[15435844],
+						FadeColors:[15435844]
+					}
+				]
+			}
+		}
+	}
+}

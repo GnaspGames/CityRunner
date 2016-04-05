@@ -183,7 +183,12 @@
 		-- Add 1 to the winners Total Wins
 		/scoreboard players add @p total_wins 1
 		-- Create Fireworks
-		/summon FireworksRocketEntity ~ ~10 ~ { LifeTime:20, FireworksItem:{ id:401, Count:1, tag:{ Fireworks:{ Explosions:[{ Flicker:1, Trail:1, Type:1, Colors:[0], FadeColors:[0] },{ Flicker:1, Trail:1, Type:2, Colors:[16777215], FadeColors:[16777215] },{ Flicker:1, Trail:1, Type:4, Colors:[15000], FadeColors:[15000] }]}}}}
+		-- /summon FireworksRocketEntity ~ ~10 ~
+		!fireworks ~ ~10 ~ Fireworks\Winner1.txt
+		!fireworks ~ ~10 ~ Fireworks\Winner2.txt
+		!fireworks ~ ~10 ~ Fireworks\Winner3.txt
+		!fireworks ~ ~10 ~ Fireworks\Winner4.txt
+		!fireworks ~ ~10 ~ Fireworks\WinnerFinal.txt
 		-- Remove finish point.	
 		/execute @e[tag=ActiveFinishPoint] ~ ~ ~ setblock ~ ~ ~ minecraft:air
 		/scoreboard players tag @e[tag=ActiveFinishPoint] remove ActiveFinishPoint
