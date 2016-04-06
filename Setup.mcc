@@ -45,11 +45,12 @@
 		!reset_objective inGame dummy IN GAME
 		
 		-- No longer needed, remove later
-		/scoreboards objectives remove villagerNoHead
-		/scoreboards objectives remove hasIntroBook
-		/scoreboards objectives remove hasCreditsBook
-		/scoreboards objectives remove start_points
-		/scoreboards objectives remove finish_points
+		/scoreboard objectives remove villagerNoHead
+		/scoreboard objectives remove hasIntroBook
+		/scoreboard objectives remove hasCreditsBook
+		/scoreboard objectives remove start_points
+		/scoreboard objectives remove finish_points
+		/scoreboard objectives remove power_ups
 		
 		-- Recreate SYSTEM entity
 		/kill @e[type=ArmorStand,name=SYSTEM]
