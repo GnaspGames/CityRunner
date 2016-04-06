@@ -86,7 +86,7 @@
 		-- Set the beacon block to turn it on
 		/setblock ~ ~ ~ minecraft:beacon
 		-- Announce the area name
-		/tellraw @a [{"text":"The finishing beacon is near: ","color":"green","bold":"true"},{"selector":"@e[type=ArmorStand,c=1,score_area_names_min=1]"}]
+		/tellraw @a [{"text":"The finishing beacon is near: ","color":"green","bold":"true"},{"selector":"@e[tag=AreaName,c=1]"}]
 	{"executeAs":""}
 	-- Turn on loop for win conditions
 	!run_loop DetectWin
