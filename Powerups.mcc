@@ -96,7 +96,7 @@
 	-- EAST FACING
 	/execute @a[m=2,rym=-135,ry=-45] ~ ~ ~ summon ArmorStand ~10 120 ~ {CustomName:"cr_falling_powerup",Marker:true,Invisible:true}
 	-- NORTH FACING
-	/execute @a[m=2,rym=135,ry=-135]~ ~ ~ summon ArmorStand ~ 120 ~-10 {CustomName:"cr_falling_powerup",Marker:true,Invisible:true}
+	/execute @a[m=2,rym=135,ry=-135] ~ ~ ~ summon ArmorStand ~ 120 ~-10 {CustomName:"cr_falling_powerup",Marker:true,Invisible:true}
 	-- WEST FACING
 	/execute @a[m=2,rym=46,ry=135] ~ ~ ~ summon ArmorStand ~-10 120 ~ {CustomName:"cr_falling_powerup",Marker:true,Invisible:true}
 	-- SOUTH FACING
