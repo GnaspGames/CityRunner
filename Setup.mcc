@@ -33,8 +33,6 @@
 		!reset_objective total_wins dummy TOTAL WINS
 		-- Use this objective to track how close players are to the finish
 		!reset_objective distance dummy DISTANCE TO FINISH
-		-- Use this to track powerups falling from the sky
-		!reset_objective power_ups dummy POWER UPS
 		-- Use this to preselect a random power up option to be used
 		!reset_objective power_up_option dummy POWER UP OPTION
 		-- This is used to track deaths during a race. Dying puts the player into specator mode
