@@ -76,8 +76,7 @@
 	-- Reset start point scores
 	/scoreboard players tag @e[tag=ActiveStartPoint] remove ActiveStartPoint
 	/scoreboard players tag @e[tag=ActiveSpawnPoint] remove ActiveSpawnPoint
-	-- Give players starting effects
-	/effect @a minecraft:speed 1000 3 true
+	-- Give playets starting items
 	/execute @r[type=ArmorStand,tag=randomStartItem] ~ ~ ~ blockdata ~ ~ ~ {auto:1b}
 	/execute @e[type=ArmorStand,tag=randomStartItem] ~ ~ ~ blockdata ~ ~ ~ {auto:0b}
 	-- Choose a new Finish Point
@@ -105,14 +104,17 @@
 	/scoreboard objectives setdisplay sidebar distance
 	-- Set time for racing in dark
 	/time set 13000
-	!run_loop CalcDistance
+	!run_loop GameRunning
 	-- TEMPORARY: Turn off builing tools
 	!exit_loop ShowStartPoints
 	!exit_loop ShowFinishPoints
 
-# DISTANCE CALC
-!loop CalcDistance
+# GAME RUNNING
+!loop GameRunning
 	{"type":"chain", "conditional":false}
+	/scoreboard players tag @a remove HasSpeed
+	/scoreboard players tag @a add HasSpeed {ActiveEffects:[{Id:1b}]}
+	/effect @a[tag=!HasSpeed] minecraft:speed 1 3 true
 	{"executeAs":"@e[tag=ActiveFinishPoint]"}
 		/scoreboard players set @a[m=2,rm=1,r=2] distance -1
 		/scoreboard players set @a[m=2,rm=2,r=3] distance -2
@@ -210,8 +212,8 @@
 	!exit_loop DetectDeaths
 	-- Reset all death counts
 	/scoreboard players reset @a deaths
-	-- Stop CalcDistance 
-	!exit_loop CalcDistance
+	-- Stop GameRunning 
+	!exit_loop GameRunning
 	-- Put the total_wins scoreboard on display
 	/scoreboard objectives setdisplay sidebar total_wins
 	-- Stop the power ups, call CancelPowerups
