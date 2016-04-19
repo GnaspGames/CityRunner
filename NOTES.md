@@ -35,7 +35,7 @@ Place where the beacon should go. Beacon will be removed and placed to turn on a
 
 `/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomName:"cr_finish_point"}`
 
-`/give @p minecraft:armor_stand ~ ~ ~ {EntityTag:{CustomName:"cr_finish_point",Marker:1b,Invulnerable:1b,NoGravity:1b,Invisible:1b}}`
+`/give @p minecraft:armor_stand 1 0 {EntityTag:{CustomName:"cr_finish_point",Marker:1b,Invulnerable:1b,NoGravity:1b,Invisible:1b}}`
 
 To start/stop showing all existing finish points:
 
@@ -46,7 +46,9 @@ To start/stop showing all existing finish points:
 ### AREA NAMES
 Use these ArmorStands to give areas a name, so that the game can announce names to be helpful
 
-`/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomNameVisible:true,CustomName:"ENTER AREA NAME"}`
+`
+/summon ArmorStand ~ ~ ~ {NoGravity:true,Marker:true,Invisible:true,CustomNameVisible:true,CustomName:"ENTER AREA NAME"}
+`
 
 Then run this to register as an Area Name.
 
