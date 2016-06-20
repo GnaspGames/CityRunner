@@ -148,6 +148,8 @@
 			/scoreboard players set @p deaths_dummy 1
 		-- Change adventure mode players to spectator when they have 1 death.
 			/gamemode spectator @p
+		-- Remove dead players from "Distance" objective
+			/scoreboard players reset @p distance
 	{"executeAs":""}
 	--- Test for no more players ---
 	-- Reset testforOutput
