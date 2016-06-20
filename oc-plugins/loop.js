@@ -1,4 +1,7 @@
-//var util = requires("util");
+// ------------------
+// --     loop     --
+// ------------------
+// Usage: !loop <loopName>
 
 module.exports = function(args, addCommand, addSetup)
 {

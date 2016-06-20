@@ -1,3 +1,9 @@
+// ----------------------
+// --     givebook     --
+// ----------------------
+// Usage: !givebook <selector> <path-to-book-file>
+// Book file data should be NBT/JSON data in the same format as used in Minecraft 'give' command.
+
 var fs = require('fs');
 var util = require('util');
 

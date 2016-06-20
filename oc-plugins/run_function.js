@@ -1,3 +1,8 @@
+// ------------------------
+// --     run_function   --
+// ------------------------
+// Usage: !run_function <functionName>
+
 module.exports = function(args, addCommand, addSetup)
 {
 	var name = args[0];

@@ -1,3 +1,9 @@
+// -----------------------
+// --     fireworks     --
+// -----------------------
+// Usage: !fireworks <x> <y> <z> <path-to-fireworks-file>
+// Fireworks file data should be NBT/JSON data in the same format as used in Minecraft 'summon' command.
+
 var fs = require('fs');
 var util = require('util');
 

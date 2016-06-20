@@ -1,3 +1,9 @@
+// -----------------------------
+// --     reset_objective     --
+// -----------------------------
+// Usage: !reset_objective <objective> <criteria>
+
+
 module.exports = function(args, addCommand, addSetup)
 {
 	var name = args[0];

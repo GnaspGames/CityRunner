@@ -1,3 +1,9 @@
+// ----------------------
+// --     run_loop     --
+// ----------------------
+// Usage: !run_loop <loopName>
+
+
 module.exports = function(args, addCommand, addSetup)
 {
 	var name = args[0];

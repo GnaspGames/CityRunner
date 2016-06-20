@@ -1,3 +1,8 @@
+// ----------------------
+// --     function     --
+// ----------------------
+// Usage: !function <functionName>
+
 module.exports = function(args, addCommand, addSetup)
 {
 	var name = args[0];
