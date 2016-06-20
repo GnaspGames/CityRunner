@@ -41,6 +41,8 @@
 		!reset_objective deaths_dummy dummy DEATHS DUMMY
 		-- inGame
 		!reset_objective inGame dummy IN GAME
+		-- scenesteps - used for counting steps in scene transitions
+		!reset_objective scenesteps dummy
 		
 		-- No longer needed, remove later
 		/scoreboard objectives remove villagerNoHead
