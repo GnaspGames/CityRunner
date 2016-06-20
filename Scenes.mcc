@@ -1,0 +1,36 @@
+--###########################--
+--         Cutscenes         --
+--###########################--
+
+--	!cutscene <objective> <tag> <seconds> 
+--	          <x_start> <y_start> <z_start> <y_rot_start> <x_rot_start> 
+--			  <x_stop> <y_stop> <z_stop> <y_rot_stop> <x_rot_stop> 
+--			  [<gamemode>]
+--			  [<x_return> <y_return> <z_return> <y_rot_return> <x_rot_return>]
+
+-- To give: /scoreboard players tag @p add enterLobby
+# Enter Lobby
+{"type":"repeating", "auto":true}
+//say DO NOTHING
+{"type":"chain", "auto":true}
+!cutscene scenesteps enterLobby 10 \
+	-56.500 90 535.500 90.0 0 \
+	0.500 64 500.500 90 0 \
+	adventure
+	
+
+-- To give: /scoreboard players tag @p add enterCity
+# Enter City
+{"type":"repeating", "auto":true}
+//say DO NOTHING
+{"type":"chain", "auto":true}
+!cutscene scenesteps enterCity 10 \
+	2044 183 2038 90.0 0 \
+	2044 64 2038 155 -20 \
+	adventure
+
+#	
+# Start enterLobby
+{"type":"impulse", "auto":false}
+/scoreboard players tag @p add enterLobby
+
