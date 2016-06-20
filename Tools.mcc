@@ -65,6 +65,22 @@
 	{"type":"chain", "auto":true}
 		/say TURN OFF PAINT
 		/scoreboard objectives setdisplay sidebar
+
+# 
+# SHOW START & FINISH POINTS
+{"type":"impulse", "auto":false}
+	/say Showing Start & Finish Points
+	{"type":"chain", "auto":true}
+		!run_loop ShowStartPoints
+		!run_loop ShowFinishPoints
+
+# 
+# HIDE START & FINISH POINTS
+{"type":"impulse", "auto":false}
+	/say Hiding Start & Finish Points
+	{"type":"chain", "auto":true}
+		!exit_loop ShowStartPoints
+		!exit_loop ShowFinishPoints
 	
 	
 	
