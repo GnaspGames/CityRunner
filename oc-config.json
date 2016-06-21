@@ -1,0 +1,6 @@
+{
+    "Output": {
+        "WriteCompiledCommandsToFile": false,
+        "CopyCompiledCommands": true
+    }
+}
