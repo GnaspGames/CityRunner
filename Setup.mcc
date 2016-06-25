@@ -62,8 +62,8 @@
 		/time set 12300
 		
 		-- Default loops that should be running
-		!run_loop TriggerStart
-		!run_loop MobCleaning
+		!start_loop TriggerStart
+		!start_loop MobCleaning
 		
 #
 # RUN RESET

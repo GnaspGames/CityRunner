@@ -1,0 +1,8 @@
+{
+    "Output": {
+        "ShowDebugInfo" : false,
+        "ShowCompiledCommands" : false,
+        "CopyCompiledCommands": true,
+        "WriteCompiledCommandsToFile": false
+    }
+}

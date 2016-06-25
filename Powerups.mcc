@@ -17,13 +17,13 @@
 {"markerTag":""}
 
 # START POWERUPS
-!function StartPowerups
+!event StartPowerups
 	{"type":"chain", "auto":true, "conditional":false}
-	!run_function CyclePowerups
-	!run_loop Powerups
+	!start_event CyclePowerups
+	!start_loop Powerups
 	
 # CYCLE POWERUPS
-!function CyclePowerups
+!event CyclePowerups
 	{"type":"chain", "conditional":false}
 	/scoreboard players set @e[name=SYSTEM] countdown 600
 	/execute @r[type=ArmorStand,tag=randomPowerUp] ~ ~ ~ blockdata ~ ~ ~ {auto:1b}
@@ -33,7 +33,7 @@
 !loop Powerups
 	-- Check countdown to trigger new power up creation
 	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
-		!run_function GivePowerups
+		!start_event GivePowerups
 	{"executeAs":""}
 	-- Countdown each tick
 	/scoreboard players remove @e[name=SYSTEM] countdown 1
@@ -92,7 +92,7 @@
 	/scoreboard players tag @e[tag=PowerUp] remove LandedPowerUp
 
 # GIVE POWERUPS
-!function GivePowerups
+!event GivePowerups
 	{"type":"chain", "conditional":false}
 	-- Summon powerups to east/north/west/south of each player
 	-- EAST FACING
@@ -104,7 +104,7 @@
 	-- SOUTH FACING
 	/execute @a[m=2,rym=-45,ry=45] ~ ~ ~ summon ArmorStand ~ 120 ~10 {Tags:["FallingPowerUp"],Marker:true,Invisible:true}
 	-- Run CyclePowerups again for next powerup
-	!run_function CyclePowerups
+	!start_event CyclePowerups
 	-- Play a thunder sound
 	/playsound ambient.weather.thunder @a ~ ~ ~ 0.2 1 0.2
 	-- Show a the powerup symbol
@@ -112,10 +112,10 @@
 	
 	
 # CANCEL POWERUPS
-!function CancelPowerups
+!event CancelPowerups
 	{"type":"chain", "conditional":false}
 	-- Turn off loop and reset countdown
-	!exit_loop Powerups
+	!stop_loop Powerups
 	-- Kill any power ups that are falling
 	/kill @e[tag=FallingPowerUp]
 	-- Disable counter. Set to -1 so that last run of Powerups loop doesn't trigger a new powerup.
@@ -128,7 +128,7 @@
 # 
 # TURN ON POWERUPS
 {"type":"impulse", "auto":false}
-	!run_function StartPowerups
+	!start_event StartPowerups
 	{"type":"chain", "auto":true}
 		/say TURN ON POWERUPS
 		/scoreboard objectives setdisplay sidebar countdown
@@ -136,7 +136,7 @@
 # 
 # TURN OFF POWERUPS
 {"type":"impulse", "auto":false}
-	!run_function CancelPowerups
+	!start_event CancelPowerups
 	{"type":"chain", "auto":true}
 		/say TURN OFF POWERUPS
 		/scoreboard objectives setdisplay sidebar

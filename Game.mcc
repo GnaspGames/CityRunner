@@ -8,24 +8,24 @@
 !loop TriggerStart
 	{"type":"chain", "auto":true, "conditional":false}
 	{"executeAs":"@a[score_trigger_start_min=1]"}
-		!run_function StartCountdown
+		!start_event StartCountdown
 		-- Announce who started game
 		/tellraw @a ["",{"selector":"@p","color":"yellow","bold":"true"},{"text":" started a new race...","color":"yellow","bold":"true"}]
 		-- Stop players using trigger_start
-		!exit_loop TriggerStart
+		!stop_loop TriggerStart
 		/scoreboard players reset @a trigger_start
 	{"executeAs":""}
 
 # START COUNTDOWN
 -- Start a countdown that leads to the game start
-!function StartCountdown
+!event StartCountdown
 	{"type":"chain", "auto":true, "conditional":false}
 	-- Set correct title times
 	/title @a times 0 40 20 
 	-- Start countdown scoreboard
 	/scoreboard players set @e[type=ArmorStand,name=SYSTEM] countdown 100
 	-- Turn on countdown loop
-	!run_loop Countdown
+	!start_loop Countdown
 
 # COUNTDOWN
 !loop Countdown
@@ -43,9 +43,9 @@
 		
 	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
 		/title @a title {"text":"Go!","color":"green","bold":"true"}
-		!exit_loop Countdown
+		!stop_loop Countdown
 			{"conditional":true}
-				!run_function StartGame
+				!start_event StartGame
 	{"executeAs":"", "conditional":false}
 	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
 	
@@ -62,7 +62,7 @@
 {"markerTag":""}
 
 # START GAME
-!function StartGame
+!event StartGame
 	{"type":"chain", "auto":true, "conditional":false}
 	-- Choose a new Start Point
 	/scoreboard players tag @r[type=ArmorStand,name=cr_start_point] add ActiveStartPoint
@@ -88,26 +88,26 @@
 		/tellraw @a [{"text":"The finishing beacon is near: ","color":"green","bold":"true"},{"selector":"@e[tag=AreaName,c=1]"}]
 	{"executeAs":""}
 	-- Turn on loop for win conditions
-	!run_loop DetectWin
+	!start_loop DetectWin
 	-- Put all players into adventure mode
 	/gamemode adventure @a
 	-- Reset DEATHS for all players
 	/scoreboard players reset @a deaths
 	/scoreboard players set @a deaths_dummy 0
 	-- Start detecting deaths
-	!run_loop DetectDeaths
+	!start_loop DetectDeaths
 	-- Start powerups
-	!run_function StartPowerups
+	!start_event StartPowerups
 	-- Give everyone full health
 	/effect @a minecraft:regeneration 1 20
 	-- Display "Distance" scoreboard and start loop
 	/scoreboard objectives setdisplay sidebar distance
 	-- Set time for racing in dark
 	/time set 13000
-	!run_loop GameRunning
+	!start_loop GameRunning
 	-- TEMPORARY: Turn off builing tools
-	!exit_loop ShowStartPoints
-	!exit_loop ShowFinishPoints
+	!stop_loop ShowStartPoints
+	!stop_loop ShowFinishPoints
 
 # GAME RUNNING
 !loop GameRunning
@@ -158,13 +158,13 @@
 	/testfor @a[score_deaths_dummy_min=0,score_deaths_dummy=0]
 	{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0]"}
 		-- Stop self
-		!exit_loop DetectDeaths
+		!stop_loop DetectDeaths
 		-- Tell everyone the game is over
 		/tellraw @a ["",{"text":"Race over!\n","color":"yellow","bold":"true"},{"text":"There's nobody left alive to win...","color":"none","bold":"false"}]
 		-- Turn DetectWin off
-		!exit_loop DetectWin
+		!stop_loop DetectWin
 		-- Run EndGame
-		!run_function EndGame
+		!start_event EndGame
 		-- Turn off finish point
 		/execute @e[tag=ActiveFinishPoint] ~ ~ ~ setblock ~ ~ ~ minecraft:air
 		/scoreboard players tag @e[tag=ActiveFinishPoint] remove ActiveFinishPoint
@@ -178,9 +178,9 @@
 	-- Execute on anyone who gets to be directly above the finish point.
 	{"executeAs":"@e[tag=ActiveFinishPoint] ~ ~ ~ execute @a[m=2,dy=200]"}
 		-- Turn self off
-		!exit_loop DetectWin
+		!stop_loop DetectWin
 		-- Run EndGame
-		!run_function EndGame
+		!start_event EndGame
 		-- Announce winner
 		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" wins! ","color":"green","bold":"true"}]
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" wins the race! ","color":"green","bold":"true"}]
@@ -199,31 +199,31 @@
 	{"executeAs":""}
 			
 # END GAME
-!function EndGame
+!event EndGame
 	{"type":"chain", "conditional":false}
 	-- Allow all players to use trigger_start again and start loop
 	/scoreboard players set @a trigger_start 0
 	/scoreboard players enable @a trigger_start
-	!run_loop TriggerStart
+	!start_loop TriggerStart
 	-- Show "Play Again" option	
 	/tellraw @a ["",{"text":"Play again? "},{"text":"YES","color":"white","underlined":"true","clickEvent":{"action":"run_command","value":"/trigger trigger_start set 1"}}]
 	-- Clear all inventories and effects
 	/effect @a clear
 	/clear @a
 	-- Stop DetectDeaths
-	!exit_loop DetectDeaths
+	!stop_loop DetectDeaths
 	-- Reset all death counts
 	/scoreboard players reset @a deaths
 	-- Stop GameRunning 
-	!exit_loop GameRunning
+	!stop_loop GameRunning
 	-- Put the total_wins scoreboard on display
 	/scoreboard objectives setdisplay sidebar total_wins
 	-- Stop the power ups, call CancelPowerups
-	!run_function CancelPowerups
+	!start_event CancelPowerups
 	-- Put the time back to afternoon
 	/time set 12300
 	-- TEMPORARY: Put all players back to creative mode
 	/gamemode creative @a
-	!run_loop ShowStartPoints
-	!run_loop ShowFinishPoints
+	!start_loop ShowStartPoints
+	!start_loop ShowFinishPoints
 

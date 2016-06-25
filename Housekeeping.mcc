@@ -40,13 +40,13 @@
 #
 # TURN ON
 {"type":"impulse","auto":false,"conditional":false}
-!run_loop MobCleaning
+!start_loop MobCleaning
 	{"type":"chain","auto":true}
 	/say TURN ON HOUSEKEEPING
 
 #
 # TURN OFF
 {"type":"impulse","auto":false,"conditional":false}
-!exit_loop MobCleaning
+!stop_loop MobCleaning
 	{"type":"chain","auto":true}
 	/say TURN OFF HOUSEKEEPING

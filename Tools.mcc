@@ -53,7 +53,7 @@
 # 
 # TURN ON PAINT
 {"type":"impulse", "auto":false}
-	!run_loop Paint
+	!start_loop Paint
 	{"type":"chain", "auto":true}
 		/say TURN ON PAINT
 		/scoreboard objectives setdisplay sidebar paint
@@ -61,7 +61,7 @@
 # 
 # TURN OFF PAINT
 {"type":"impulse", "auto":false}
-	!exit_loop Paint
+	!stop_loop Paint
 	{"type":"chain", "auto":true}
 		/say TURN OFF PAINT
 		/scoreboard objectives setdisplay sidebar
@@ -71,16 +71,16 @@
 {"type":"impulse", "auto":false}
 	/say Showing Start & Finish Points
 	{"type":"chain", "auto":true}
-		!run_loop ShowStartPoints
-		!run_loop ShowFinishPoints
+		!start_loop ShowStartPoints
+		!start_loop ShowFinishPoints
 
 # 
 # HIDE START & FINISH POINTS
 {"type":"impulse", "auto":false}
 	/say Hiding Start & Finish Points
 	{"type":"chain", "auto":true}
-		!exit_loop ShowStartPoints
-		!exit_loop ShowFinishPoints
+		!stop_loop ShowStartPoints
+		!stop_loop ShowFinishPoints
 	
 	
 	
