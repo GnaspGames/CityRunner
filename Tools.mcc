@@ -30,8 +30,8 @@
 	/execute @a[score_paint_min=5,score_paint=5] ~ ~ ~ fill ~ ~-1 ~ ~1 ~-1 ~1 minecraft:grass_path 0 replace grass 0
 	-- Paint 6: Sea Bed (Dirt)
 	/execute @a[score_paint_min=6,score_paint=6] ~ ~ ~ fill ~-10 49 ~-10 ~9 53 ~9 minecraft:dirt 0
-	-- Paint 7: Sand (careful!)
-	/execute @a[score_paint_min=7,score_paint=7] ~ ~ ~ fill ~-3 58 ~-3 ~2 61 ~2 minecraft:sand 0 replace minecraft:air 0
+	-- Paint 7: Sand level 61
+	/execute @a[score_paint_min=7,score_paint=7] ~ ~ ~ /setblock ~ 61 ~ sand
 	-- Paint 8: Water (sea level)
 	/execute @a[score_paint_min=8,score_paint=8] ~ ~ ~ fill ~-6 58 ~-6 ~5 61 ~5 minecraft:water 0 replace minecraft:air 0
 	-- Paint 9: Remove Water (sea)
